@@ -26,11 +26,11 @@ const ethereumClient = new EthereumClient(wagmiClient, chains)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const w3mTheme = {
-  '--w3m-accent-color': '#52BAD1',
-  '--w3m-accent-fill-color': '#FBF9FF',
-  '--w3m-background-color': '#52bad1',
+  '--w3m-accent-color': '#a5e65a',
+  '--w3m-accent-fill-color': '#000000',
+  '--w3m-background-color': '#a5e65a',
   '--w3m-container-border-radius': '20px',
-  '--w3m-button-border-radius': '20px',
+  '--w3m-button-border-radius': '10px',
 }
 
 

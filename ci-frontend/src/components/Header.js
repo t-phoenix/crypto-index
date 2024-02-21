@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { navlinks } from "../constants/navlinks";
 import { IoMenu } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
+import Navbar from "./Navbar";
 
 export default function Header() {
   const { chain } = useNetwork();
@@ -13,8 +14,8 @@ export default function Header() {
   console.log("Chain: ", chain);
   const [showMenu, setShowMenu] = React.useState(false);
 
-
-  const isMobile = useMediaQuery({ maxWidth: "1150px" });
+  const isMobile = useMediaQuery({maxWidth: "600px"})
+  const isTab = useMediaQuery({ maxWidth: "992px" });
 
   function openNavBar(){
     console.log("Show Menu variabel:", showMenu)
@@ -23,57 +24,34 @@ export default function Header() {
 
   return (
     <div className="header">
-      {isMobile ? (
+      {isTab ? (
         <div className="header-container">
           <div className="nav-burger" onClick={openNavBar}>
             <IoMenu />
           </div>
           <div className="title-container" onClick={() => navigate("/")}>
-            <h2 className="title">BLUE CHIP</h2>
+            <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>
         </div>
       ) : (
         <div className="header-container">
           <div className="title-container" onClick={() => navigate("/")}>
-            <h2 className="title">BLUE CHIP</h2>
+            <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>
-          <div className="links-container">
-            {navlinks.map((navlink) => (
-              <div
-                key={navlink.name}
-                className="links-style"
-                onClick={() => {
-                  navigate(navlink.link);
-                }}
-              >
-                <p>{navlink.name}</p>
-              </div>
-            ))}
-          </div>
+          <Navbar setShow={setShowMenu}/>
         </div>
       )}
       {
-        showMenu? <div className="nav-menu">
-            {navlinks.map((navlink) => (
-              <div
-                key={navlink.name}
-                className="links-style-mobile"
-                onClick={() => {
-                    setShowMenu(false)
-                  navigate(navlink.link);
-                }}
-              >
-                <p>{navlink.name}</p>
-              </div>
-            ))}
-        </div>: <></>
+        showMenu? <Navbar setShow={setShowMenu}/>: <></>
       }
 
 
       <div className="web3buttonContainer">
         <Web3Button />
+        {isMobile? <></>: 
+        <>
         {chain && (
           <div
             style={{
@@ -95,6 +73,8 @@ export default function Header() {
             </p>
           </div>
         )}
+        </>
+        }
       </div>
     </div>
   );

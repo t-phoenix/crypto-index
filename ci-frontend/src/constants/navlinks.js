@@ -1,7 +1,7 @@
 export const navlinks = [
   {
-    name: 'Blue Chip',
-    link: '/bluechip',
+    name: 'Mint',
+    link: '/mint',
   },
   {
     name: 'Faucet',

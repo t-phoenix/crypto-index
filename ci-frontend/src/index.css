@@ -11,8 +11,8 @@ body {
   font-family: var(--body-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--body-color);
-  color: var(--text-color);
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 code {
@@ -22,11 +22,11 @@ code {
 
 :root {
   --header-height: 3.5rem;
-  --primary-color: #52BAD1;
-  --secondary-color: #C0DA74;
-  --title-color: hsl(0, 0%, 95%);
-  --text-color: hsl(0, 0%, 75%);
-  --body-color: hsl(0, 0%, 6%);
+  --primary-color: #a5e65a;
+  --secondary-color: #32d9cb;
+  --tertiary-color: #00a6c0;
+  --color-white: #FFFFFF;
+  --color-black: #191E29;
   --body-font: "Montserrat", sans-serif;
   --second-font: "Dancing Script", cursive;
   --h2-font-size: 1.25rem;
