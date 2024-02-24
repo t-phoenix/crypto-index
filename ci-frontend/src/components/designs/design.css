@@ -4,4 +4,5 @@ line {
   stroke-width: 10px;
   stroke-linecap: round;
   fill: transparent;
+  box-shadow: 2px 2px 10px var();
 }

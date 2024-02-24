@@ -1,17 +1,23 @@
 import React from "react";
 import "./second.css";
 import BoxDesign from "../designs/BoxDesign";
+import {motion} from 'framer-motion';
 
 export default function SecondSection() {
   return (
     <div className="second-section-box">
-      <div className="card">
+      <motion.div 
+        className="card" 
+        initial={{opacity: 0, translateX: -200}}
+        whileInView={{opacity: 1, translateX: 0}}
+        transition={{duration: 2, ease: 'easeInOut'}}
+        >
         <h3 className="card-header">What is Crypto Index?</h3>
         <p className="card-content">
           In simple words, its a cryptocurrency index fund which helps you
           invest in cryptocurreny with a safe and diversified portfolio.
         </p>
-      </div>
+      </motion.div>
       <BoxDesign />
     </div>
   );
