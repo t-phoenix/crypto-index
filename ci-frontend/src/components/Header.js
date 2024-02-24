@@ -29,14 +29,14 @@ export default function Header() {
           <div className="nav-burger" onClick={openNavBar}>
             <IoMenu />
           </div>
-          <div className="title-container" onClick={() => navigate("/")}>
+          <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
             <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>
         </div>
       ) : (
         <div className="header-container">
-          <div className="title-container" onClick={() => navigate("/")}>
+          <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
             <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>

@@ -1,0 +1,37 @@
+/* //IconList */
+.icon-box {
+    height: 100%;
+    margin-block: 40vh;
+    margin-inline: 4vw;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* style={{height: '80vh', marginBlock: '10vh', marginInline: '5vw', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }} */
+  
+  .crypto-icons {
+    margin: 2%;
+    padding: 0.5%;
+    border-radius: 10%;
+    animation: wiggle 3s linear infinite;
+    box-shadow: 4px 4px 8px var(--secondary-color);
+  }
+  
+  @keyframes wiggle {
+      0%  {transform: translate(-2px, -2px) skew(5deg, 5deg) ;   box-shadow: 2px 2px 4px var(--secondary-color);}
+      25% {transform: translate(-2px, 2px) skew(-5deg, 5deg);  box-shadow: -1px 1px 4px var(--secondary-color);}
+      50% {transform: translate(2px, 2px) skew(-5deg, -5deg); box-shadow: -2px -2px 4px var(--secondary-color);}
+      75% {transform: translate(2px, -2px) skew(5deg, -5deg);  box-shadow: 1px -1px 4px var(--secondary-color);}
+      100%{transform: translate(-2px, -2px) skew(5deg, 5deg);   box-shadow: 2px 2px 4px var(--secondary-color);}
+  }
+  
+  @media all and (max-width: 600px) {
+    .icon-box {
+      margin-inline: 2vw;
+      margin-block: 25vh;
+    }
+    .crypto-icons {
+      margin: 3%;
+    }
+  }
+  

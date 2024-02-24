@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
-import Icon from 'react-crypto-icons';
 import {
   HERO_HEADING_DURATION,
   HERO_HEADING_FINAL_OPACITY,
@@ -10,7 +9,6 @@ import {
   HERO_HEADING_INITIAL_SCALE,
 } from "../../constants/animation";
 import './hero.css';
-
 
 
 export default function HeroSection() {
@@ -57,13 +55,6 @@ export default function HeroSection() {
               () => setTypingAnimationTextColor("#D8D8F6 "),
               "For Traders",
               1000,
-            //   () => setTypingAnimationTextColor("#2274A5"),
-            //   "To Grow",
-            //   1000,
-            //   () => setTypingAnimationTextColor("#EDCBB1"),
-            //   "For Technologists",
-            //   1000,
-            //   () => setTypingAnimationTextColor("#FF66B3 "),
             ]}
             speed={50}
             deletionSpeed={75}

@@ -1,0 +1,46 @@
+.second-section-box{
+  height: 80vh;
+  margin-bottom: 20vh;
+  padding-inline: 6%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+
+
+.card{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-inline: 6%;
+    z-index: 5;
+}
+
+.card-header{
+    font-size: 3.8em;
+    text-align: start;
+    color: var(--primary-color);
+    margin-top: 20%;
+}
+
+.card-content{
+    margin-top: 10%;
+    font-size: 1.4em;
+    text-align: start;
+}
+
+@media all and (max-width: 600px) {
+    .second-section-box{
+        flex-direction: column;
+    }
+    .card-header{
+        font-size: 2.6em;
+    }
+    .card-content{
+        font-size: 1em;
+        padding-left: 1%;
+    }
+}

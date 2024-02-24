@@ -1,0 +1,17 @@
+.third-section-box{
+    height: 80vh;
+    margin-bottom: 20vh;
+    padding-inline: 6%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+  }
+  
+  @media all and (max-width: 600px) {
+      .third-section-box{
+          flex-direction: column-reverse;
+      }
+      
+  }
+  

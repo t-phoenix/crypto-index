@@ -3,6 +3,7 @@ import { navlinks } from "../constants/navlinks";
 import "../styles/header.css";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Navbar({setShow}){
     const navigate = useNavigate();
 
@@ -23,3 +24,5 @@ export default function Navbar({setShow}){
           </div>
     )
 }
+
+
