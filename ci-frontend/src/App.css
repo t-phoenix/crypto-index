@@ -23,25 +23,30 @@ a {
   color: var(--secondary-color);
 }
 
+
 button {
-  height: 35px;
-  border-radius: 10px;
+  width: 200px;
+  border-radius: 16px;
   margin-block: 10px;
   margin-block: 10px;
-  padding-block: 0px;
+  padding-block: 10px;
   padding-inline: 20px;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   box-shadow: 2px 1px var(--color-white);
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content:center;
   align-items: center;
+  font-size: large;
+  font-weight: 600;
 }
 
 button:hover {
-  background-color: var(--secondary-color);
+  scale: 1.05;
   box-shadow: 1px 1px var(--primary-color);
 }
+
+
 
 input {
   width: 250px;
@@ -50,6 +55,10 @@ input {
   font-size: 32px;
   background-color: var(--secondary-color);
   border-width: 0;
+}
+
+input:focus{
+  outline: none;
 }
 
 

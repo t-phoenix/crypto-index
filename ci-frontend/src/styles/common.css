@@ -1,0 +1,129 @@
+.main-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.center-in-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.trade-box{
+  width: 500px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 1px var(--primary-color);
+  padding: 1.6%;
+}
+
+.input-box{
+  
+  background-color: #353535;
+  border-style: groove;
+  border-width: 0px;
+  border-radius: 16px;
+  border-color: aliceblue;
+  padding: 2%;
+  padding-bottom: 5%;
+  padding-right: 4%;
+  margin-block: 5%;
+  margin-inline: 0px;
+}
+
+@media screen and (max-width: 600px){
+  .trade-box{
+    width: 94%;
+    padding-top: 6%;
+    padding-bottom: 10%;
+    padding-inline: 3%;
+  }
+} 
+
+
+.asset-button{
+  width: 120px;
+  background-color: var(--primary-color);
+  border-radius: 25px;
+  color: var(--color-black);
+  padding-inline: 10px;
+  padding-block: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.asset-list-box{
+  position: fixed;
+    top: 20vh;
+    background-color: var(--color-black);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(16px);
+    width: 400px;
+    height: 60vh;
+    transition: left 1s;
+    padding-top: 2%;
+    padding-left: 2%;
+    margin-inline: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-style: groove;
+    border-width: 4px;
+    border-color: var(--secondary-color);
+    border-radius: 25px;
+    box-shadow: 2px 2px 8px var(--color-white);
+}
+
+@media screen and (max-width: 600px){
+  .asset-list-box{
+    width: 92%;
+    right: 4%;
+    padding-top: 8%;
+    padding-left: 8%;
+  }
+}
+
+.asset-list-element{
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-block: 8px;
+  border-width: 1px;
+  border-color: var(--primary-color);
+  border-radius: 10px;
+  background-color: var(--color-offblack);
+  padding-inline: 16px;
+  padding-block: 6px;
+
+}
+
+.asset-list-header{
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.asset-list-tail{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.output-amount{
+  width: 50%;
+  padding-block: 5px;
+  padding-inline: 10px;
+  margin: 5px;
+  font-size: 32px;
+  font-weight: 400;
+  background-color: transparent;
+  color: var(--color-white);
+  border-width: 0;
+  text-align: start;
+}

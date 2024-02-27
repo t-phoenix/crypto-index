@@ -3,12 +3,13 @@ import "./App.css";
 
 import { Route, Routes } from "react-router-dom";
 import { useNetwork } from "wagmi";
-
+import {Toaster} from "react-hot-toast";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Faucet from "./pages/Faucet";
 import Footer from "./components/Footer";
-import Mint from "./pages/Mint";
+import Fund from "./pages/Fund";
+import DemoApp from "./pages/DemoApp";
+import Analytics from "./pages/Analytics";
 
 function App() {
   const { chain } = useNetwork();
@@ -21,12 +22,14 @@ function App() {
       <div className="body">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/mint" element={<Mint />} />
-          <Route path="/faucet" element={<Faucet />} />
+          <Route path="/fund" element={<Fund />} />
+          <Route path="/demoApp" element={<DemoApp />} />
+          <Route path="/analytics" element={<Analytics />}/>
         </Routes>
       </div>
 
       <Footer/>
+      <Toaster toastOptions={{duration: 8000, style: {maxWidth: 800}}}/>
       
     </div>
   );

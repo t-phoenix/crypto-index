@@ -1,10 +1,10 @@
 import React from "react"
 
 
-export default function Mint(){
+export default function Analytics(){
     return(
         <div className="main-content">
-            <h1>Blue Chip</h1>
+            <h1>Analytics</h1>
             
         </div>
     )

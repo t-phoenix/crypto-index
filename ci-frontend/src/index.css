@@ -26,7 +26,8 @@ code {
   --secondary-color: #32d9cb;
   --tertiary-color: #00a6c0;
   --color-white: #FFFFFF;
-  --color-black: #191E29;
+  --color-black: #191e29;
+  --color-offblack: #303a4f;
   --body-font: "Montserrat", sans-serif;
   --second-font: "Dancing Script", cursive;
   --h2-font-size: 1.25rem;

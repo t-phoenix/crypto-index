@@ -16,7 +16,7 @@
 .header-container{
   display: flex;
   flex-direction: row;
-  width: 70%;
+  width: 80%;
 }
 
 .title-container {
@@ -57,8 +57,9 @@
 .icon-title:hover {
   margin: 0px;
   font-size: 12px;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
+
 
 
 .web3buttonContainer {
@@ -90,10 +91,12 @@
   margin-inline: 2%;
   padding-inline: 2%;
   padding-block: 1%;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 100%;
 }
 
-.links-style:hover{
+
+.links-style:hover, .selected-link{
   margin-inline: 2%;
   padding-inline: 2%;
   padding-block: 1%;

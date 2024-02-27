@@ -8,6 +8,17 @@ import { IoMenu } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
 
+function Logo({setShowMenu}){
+  const navigate = useNavigate();
+  return(
+    <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
+            <h2 className="title">CRYPTO INDEX</h2>
+            <p className="icon-title">by EquiLabs</p>
+    </div>
+  )
+}
+
+
 export default function Header() {
   const { chain } = useNetwork();
   const navigate = useNavigate();
