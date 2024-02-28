@@ -12,6 +12,14 @@
   justify-content: center;
 }
 
+.wide-apart-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-inline: 1%;
+}
+
 .trade-box{
   width: 500px;
   border-radius: 25px;
@@ -20,7 +28,6 @@
 }
 
 .input-box{
-  
   background-color: #353535;
   border-style: groove;
   border-width: 0px;
@@ -127,3 +134,4 @@
   border-width: 0;
   text-align: start;
 }
+

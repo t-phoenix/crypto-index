@@ -10,7 +10,6 @@ import tether from "../assets/usdt.svg"
 import OutBoxput from "../components/OutputBox";
 import { useAccount } from "wagmi";
 import { Web3Button } from "@web3modal/react";
-import { formatAddress } from "../services/Formatter";
 
 export default function Fund() {
     const account = useAccount()
@@ -68,7 +67,7 @@ export default function Fund() {
           〽️ 1 INDEX = $100
         </p>
         <br/>
-        <InputBox inputAmout={inputAmout} setInputAmount={setInputAmount} inputAmtValue={inputAmtValue} setInputAmtValue={setInputAmtValue} selectedAsset={selectedInputAsset} setSelectedAsset={setSelectedInputAsset} tokensList={isInputINDEX? tokensList2 : tokensList}/>
+        <InputBox inputAmout={inputAmout} setInputAmount={setInputAmount} inputAmtValue={inputAmtValue} setInputAmtValue={setInputAmtValue} isMultiAsset={true} selectedAsset={selectedInputAsset} setSelectedAsset={setSelectedInputAsset} tokensList={isInputINDEX? tokensList2 : tokensList}/>
         <div className="center-in-row" >
             <motion.p whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} onClick={changeAssets} style={{width: '30px', fontSize: '24px', fontWeight: '700', backgroundColor: "#a5e65a", color: '#000000', borderRadius: '8px'}}>↕</motion.p>
         </div>
@@ -82,6 +81,7 @@ export default function Fund() {
         <br/>
         {account.address ? <div className="center-in-row"><button onClick={buyINDEX}>Fund</button></div> : <Web3Button />}
         
+        <br/>
         <br/>
       </div>
     </div>
