@@ -135,3 +135,28 @@
   text-align: start;
 }
 
+
+.subnav-container{
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
+}
+
+.subnav-element{
+  padding-inline: 12px;
+  padding-block: 6px;
+  border-style: solid;
+}
+.subnav-element:nth-child(1){
+  border-radius: 10px 0px 0px 10px;
+}
+
+.subnav-element:last-child{
+  border-radius: 0 10px 10px 0px;
+}
+.selected-subnav-element{
+  background-color: var(--primary-color);
+  color: var(--color-black);
+  border-width: 2px;
+  border-color: var(--color-offwhite);
+}

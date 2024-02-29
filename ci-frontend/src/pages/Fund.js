@@ -54,7 +54,7 @@ export default function Fund() {
 
       <div className="trade-box">
         <br/>
-        <h1 style={{ textAlign: "start" }}>Fund</h1>
+        <h1 style={{ textAlign: "start" }}>BUY INDEX</h1>
         <p
           style={{
             textAlign: "start",

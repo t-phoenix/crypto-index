@@ -7,3 +7,18 @@ export const formatAddress = (addr) => {
 // export const expoloreAddress = (address) =>{
 //     useHref(`https://testnet.bscscan.com/address/${address}`)
 // }
+
+
+export function formatUNIXDate(unix_timestamp){
+    var date = new Date(unix_timestamp );
+    var todateString = date.toLocaleDateString()
+    console.log(todateString);
+    return todateString
+  }
+
+ export function formatUNIXTime(unix_timestamp){
+    var date = new Date(unix_timestamp );
+    var toTimeString = date.toLocaleTimeString();
+    console.log(toTimeString)
+    return toTimeString
+  }

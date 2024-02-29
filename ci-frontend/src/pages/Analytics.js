@@ -1,17 +1,19 @@
 import React from "react";
 import "../styles/analytics.css";
 
-import Overview from "../components/Overview";
-import HistoryGraph from "../components/HistoryGraph";
+import Overview from "../components/analytics/Overview";
+import HistoryGraph from "../components/analytics/HistoryGraph";
+import Composition from "../components/analytics/Composition";
+import ContractInfo from "../components/analytics/ContractInfo";
  
 
 
 export default function Analytics() {
   const overviewData = [
-    { title: "Asset Under Management", data: "47657990.95" },
-    { title: "Token In Circulation", data: "32846" },
-    { title: "Average Monthly Return", data: "+13.56%" },
-    { title: "Denomination Asset", data: "USDT" },
+    { title: "Asset Under Management", value: "47657990.95" },
+    { title: "Token In Circulation", value: "32846" },
+    { title: "Index Price", value: "9759.65" },
+    { title: "Denomination Asset", value: "USDT" },
   ];
 
   return (
@@ -22,8 +24,11 @@ export default function Analytics() {
           A balanced Crypto Index Fund to simplify Crypto Investments in a
           structured format to mitigate the risks.
         </p>
-        <Overview />
+        <Overview data={overviewData}/>
         <HistoryGraph />
+        <Composition />
+        <ContractInfo />
+
 
       </div>
     </div>

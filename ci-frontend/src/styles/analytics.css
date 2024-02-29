@@ -7,11 +7,16 @@
   
   }
 
+  .simple-row{
+    display: flex;
+    flex-direction: row;
+
+  }
 
   .center-in-row{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content:center;
   }
 
   .wide-apart-row{
@@ -50,3 +55,35 @@
   line{
     stroke-width: 2px;
   }
+
+.composition-heading{
+  background-color: var(--color-offblack);
+  color: var(--color-offwhite);
+  border-radius: 10px 10px 0 0;
+  align-items: end;
+  font-size: 14px;
+  font-weight: 900;
+  padding-top: 2%;
+  padding-bottom: 1%;
+}
+
+.composition-row{
+  background-color: #3f4c69;
+  align-items: end;
+  font-size: 12px;
+  padding-top: 2%;
+  padding-bottom: 1%;
+}
+
+  .element-box{
+    width: 20%;
+    text-align: center;
+  }
+
+  .title-box{
+    width: 20vw;
+    padding-left: 1%;
+    font-weight: 700;
+  }
+  
+  

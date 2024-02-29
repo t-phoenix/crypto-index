@@ -2,6 +2,7 @@ import React from "react";
 import {motion} from 'framer-motion';
 import "../styles/common.css";
 import AssetMenu from "./common/AssetMenu";
+import {MdAccountBalanceWallet} from 'react-icons/md'
 
 export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, setInputAmtValue, isMultiAsset, selectedAsset, setSelectedAsset, tokensList }) {
   const [showAssetList, setShowAssetList] = React.useState(false);
@@ -76,8 +77,8 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
         }}
       >
         <p>$ {Number(inputAmtValue).toFixed(4)}</p>
-        <p style={{marginRight: '8px'}}>
-          Balance: {selectedAsset.balance} {selectedAsset.symbol}
+        <p style={{marginRight: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <MdAccountBalanceWallet size={20} style={{marginRight: '2px'}}/> : {selectedAsset.balance} {selectedAsset.symbol}
         </p>
       </div>
     </div>

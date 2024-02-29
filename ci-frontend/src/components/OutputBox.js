@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/common.css"
+import {MdAccountBalanceWallet} from 'react-icons/md'
 
 export default function OutBoxput({ inputAmout, setInputAmount, inputAmtValue, setInputAmtValue, selectedAsset, setSelectedAsset, tokensList }) {
 
@@ -43,8 +44,8 @@ export default function OutBoxput({ inputAmout, setInputAmount, inputAmtValue, s
         }}
       >
         <p>$ {Number(inputAmtValue).toFixed(4)}</p>
-        <p style={{marginRight: '8px'}}>
-          Balance: {selectedAsset.balance} {selectedAsset.symbol}
+        <p style={{marginRight: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <MdAccountBalanceWallet size={22} style={{marginRight: '2px'}}/>: {selectedAsset.balance} {selectedAsset.symbol}
         </p>
       </div>
     </div>
