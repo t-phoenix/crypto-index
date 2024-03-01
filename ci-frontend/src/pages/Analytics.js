@@ -22,7 +22,7 @@ export default function Analytics() {
         <h1>Crypto INDEX Fund</h1>
         <p style={{ width: "60%", fontSize: "14px", marginBlock: "8px", marginLeft: '0px' }}>
           A balanced Crypto Index Fund to simplify Crypto Investments in a
-          structured format to mitigate the risks.
+          structured format to mitigate the risks. (Testnet)
         </p>
         <Overview data={overviewData}/>
         <HistoryGraph />

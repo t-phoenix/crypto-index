@@ -26,10 +26,25 @@ export default function OutBoxput({ inputAmout, setInputAmount, inputAmtValue, s
             width: "30%",
           }}
         >
-          <div className="asset-button" style={{backgroundColor: "#cccbcb"}}>
+          <div className="asset-button" style={{backgroundColor: "#303a4f", color: "#ffffff", borderColor: "#cccbcb", borderStyle: "solid"}}>
             <img src={selectedAsset.src} style={{width: '30px'}}/>
             <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
           </div>
+          
+          {/* {tokensList.length ===1  ? 
+          <div className="asset-button" style={{backgroundColor: "#303a4f", color: "#ffffff", borderColor: "#cccbcb", borderStyle: "solid"}}>
+            <img src={selectedAsset.src} style={{width: '30px'}}/>
+            <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
+          </div>:
+          <motion.div className="asset-button" onClick={handleSelectAsset} whileHover={{scale: 1.1}} whileTap={{scale: 0.9}}>
+            <img src={selectedAsset.src} style={{width: '30px'}}/>
+            <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
+          </motion.div>}
+          {showAssetList ? (
+            <AssetMenu setShowAssetList={setShowAssetList}  setSelectedAsset={setSelectedAsset} tokensList={tokensList}/>
+          ) : (
+            <></>
+          )} */}
         </div>
       </div>
 

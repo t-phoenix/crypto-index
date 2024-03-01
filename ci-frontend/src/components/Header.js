@@ -3,20 +3,10 @@ import "../styles/header.css";
 import { Web3Button } from "@web3modal/react";
 import { useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { navlinks } from "../constants/navlinks";
 import { IoMenu } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
-
-function Logo({setShowMenu}){
-  const navigate = useNavigate();
-  return(
-    <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
-            <h2 className="title">CRYPTO INDEX</h2>
-            <p className="icon-title">by EquiLabs</p>
-    </div>
-  )
-}
+import CiLogo from "../assets/CiLogo.png"
 
 
 export default function Header() {
@@ -41,6 +31,7 @@ export default function Header() {
             <IoMenu />
           </div>
           <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
+          {/* <img src={CiLogo} style={{width: '30px'}} alt="Crypto Index Logo"/> */}
             <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>

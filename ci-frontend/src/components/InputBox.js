@@ -6,6 +6,7 @@ import {MdAccountBalanceWallet} from 'react-icons/md'
 
 export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, setInputAmtValue, isMultiAsset, selectedAsset, setSelectedAsset, tokensList }) {
   const [showAssetList, setShowAssetList] = React.useState(false);
+  
   function onInputChange(e) {
     setInputAmount(e.target.value);
     setInputAmtValue(e.target.value * selectedAsset.price);
@@ -16,7 +17,7 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
   }
 
   return (
-    <div className="input-box" style={{marginBottom: '-10px'}}>
+    <div className="input-box" style={{marginBlock: '-10px'}}>
       <div
         style={{
           width: "100%",
@@ -49,8 +50,8 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
             width: "30%",
           }}
         >
-          {!isMultiAsset ? 
-          <div className="asset-button" style={{backgroundColor: "#cccbcb"}}>
+          {tokensList.length ===1  ? 
+          <div className="asset-button" style={{backgroundColor: "#303a4f", color: "#ffffff", borderColor: "#cccbcb", borderStyle: "solid"}}>
             <img src={selectedAsset.src} style={{width: '30px'}}/>
             <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
           </div>:

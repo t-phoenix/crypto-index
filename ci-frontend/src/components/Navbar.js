@@ -12,7 +12,6 @@ export default function Navbar({setShow}){
         <div className="links-container">
             {navlinks.map((navlink) => (
               <div
-                
                 key={navlink.name}
                 className="links-style"
                 onClick={() => {
