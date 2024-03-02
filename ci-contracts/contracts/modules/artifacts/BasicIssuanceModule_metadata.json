@@ -1,0 +1,476 @@
+{
+	"compiler": {
+		"version": "0.6.10+commit.00c0fcaf"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract IController",
+						"name": "_controller",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_issuer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_hookContract",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "SetTokenIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_redeemer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "SetTokenRedeemed",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "controller",
+				"outputs": [
+					{
+						"internalType": "contract IController",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "getRequiredComponentUnitsForIssue",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IManagerIssuanceHook",
+						"name": "_preIssueHook",
+						"type": "address"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "issue",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "managerIssuanceHook",
+				"outputs": [
+					{
+						"internalType": "contract IManagerIssuanceHook",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "redeem",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "removeModule",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Set Protocol Module that enables issuance and redemption functionality on a SetToken. This is a module that is required to bring the totalSupply of a Set above 0.",
+			"methods": {
+				"constructor": {
+					"params": {
+						"_controller": "Address of controller contract"
+					}
+				},
+				"getRequiredComponentUnitsForIssue(address,uint256)": {
+					"params": {
+						"_quantity": "Quantity of SetToken to issue",
+						"_setToken": "Instance of the SetToken to issue"
+					},
+					"returns": {
+						"_0": "address[]            List of component addresses",
+						"_1": "uint256[]            List of component units required to issue the quantity of SetTokens"
+					}
+				},
+				"initialize(address,address)": {
+					"params": {
+						"_preIssueHook": "Instance of the Manager Contract with the Pre-Issuance Hook function",
+						"_setToken": "Instance of the SetToken to issue"
+					}
+				},
+				"issue(address,uint256,address)": {
+					"params": {
+						"_quantity": "Quantity of the SetToken to mint",
+						"_setToken": "Instance of the SetToken contract",
+						"_to": "Address to mint SetToken to"
+					}
+				},
+				"redeem(address,uint256,address)": {
+					"params": {
+						"_quantity": "Quantity of the SetToken to redeem",
+						"_setToken": "Instance of the SetToken contract",
+						"_to": "Address to send component assets to"
+					}
+				}
+			},
+			"title": "BasicIssuanceModule"
+		},
+		"userdoc": {
+			"methods": {
+				"constructor": "Set state controller state variable",
+				"getRequiredComponentUnitsForIssue(address,uint256)": {
+					"notice": "Retrieves the addresses and units required to mint a particular quantity of SetToken."
+				},
+				"initialize(address,address)": {
+					"notice": "Initializes this module to the SetToken with issuance-related hooks. Only callable by the SetToken's manager. Hook addresses are optional. Address(0) means that no hook will be called"
+				},
+				"issue(address,uint256,address)": {
+					"notice": "Deposits the SetToken's position components into the SetToken and mints the SetToken of the given quantity to the specified _to address. This function only handles Default Positions (positionState = 0)."
+				},
+				"redeem(address,uint256,address)": {
+					"notice": "Redeems the SetToken's positions and sends the components of the given quantity to the caller. This function only handles Default Positions (positionState = 0)."
+				},
+				"removeModule()": {
+					"notice": "Reverts as this module should not be removable after added. Users should always have a way to redeem their Sets"
+				}
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/modules/BasicIssuanceModule.sol": "BasicIssuanceModule"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xcc78a17dd88fa5a2edc60c8489e2f405c0913b377216a5b26b35656b2d0dab52",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://526dc85e1f9b9b45830e202568d267d93dde7a4fcccf4ad7798dadcd92304d3c",
+				"dweb:/ipfs/QmaoXMB972J3cSDLtBq3xBo4jLwqD2uzXTwujtSPqkYVhR"
+			]
+		},
+		"@openzeppelin/contracts/math/SignedSafeMath.sol": {
+			"keccak256": "0xd17ac7e1d8f83d20d80e652adfed83da122f3a3c7b69fefa2985d85aebf0a3e9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://64e13936e5e7382737f9c12918f5365fd9e68bf96e83d66f3323f47b1d7162c7",
+				"dweb:/ipfs/Qmd2qkUCFdpAXJ6NNTkPxmkKaPzYYmeBhDey8N8XN39wqw"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08",
+				"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+			"keccak256": "0xf12dfbe97e6276980b83d2830bb0eb75e0cf4f3e626c2471137f82158ae6a0fc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b3a849c2d95e85463909e5b5c920b13e7a11216ca14127085e16d22b9379d52a",
+				"dweb:/ipfs/QmUg3CZDbCCcQdroEpexBy5ZFd5vD1UWijWQq9qHZjtJNQ"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x28911e614500ae7c607a432a709d35da25f3bc5ddc8bd12b278b66358070c0ea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://256c8c8af5eb072bc473226ab2b2187149b8fc04f5f4a4820db22527f5ce8e3c",
+				"dweb:/ipfs/QmRvi5BhnL7Rxf85KrJhwM6RRhukm4tzoctRdgQEheNyiN"
+			]
+		},
+		"@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x8bbbc2f5c10065ee272592ae0a7a6ceb23de2fbd81564ee0bb015ecf404d5f61",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b95e56c1640d0ef789fc5c16269e141e992f6c8ac97cc6d377bd3825e9cab182",
+				"dweb:/ipfs/QmVzaxJZY51EhagrcNnkxoU6Uq17RhATe7aHvtkC6wUkgK"
+			]
+		},
+		"@openzeppelin/contracts/utils/SafeCast.sol": {
+			"keccak256": "0x7b2b8baa20fd60ab4a328c8e34c64a353651b80ba4b5b157cbb61813f6f85d55",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://125b7f9efa390e663d630c62b97ae4e0707f31623bea989ef94c97ca9d777dd2",
+				"dweb:/ipfs/QmaaLSuwvqK7wqcgyS3utHgfmB7RntcvP7eJSuvQod8Z9P"
+			]
+		},
+		"contracts/interfaces/IController.sol": {
+			"keccak256": "0x8deb2f94e24e9524ce4de88804c98694781d8f38fbadccc3207d28b8e0ce4911",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://755f656a314737b0eeffbee1b7dc257b751c0764d70f008beb6cccececaeb2d7",
+				"dweb:/ipfs/QmUmFs1ukqWUmfcm5irGYHYZnv8NwMYGD3EUuoA5BvbhER"
+			]
+		},
+		"contracts/interfaces/IIntegrationRegistry.sol": {
+			"keccak256": "0xb9a2f67aa926694fcfa6b9f2300423a253162078b12e3ff0b8c864c5a143c975",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://2448da2adc2ca3c858e2413a0833f7a384e4a9430af0a923411d0d0ff1c5076d",
+				"dweb:/ipfs/QmTEdnKViq2riEoDzfLwuXxtWdieLL8ZfRL7WanfQwXxHf"
+			]
+		},
+		"contracts/interfaces/IManagerIssuanceHook.sol": {
+			"keccak256": "0x3e7ee6c0e4cd496b28d7b0a6bc3cc1823f70ef3ba2f096f258610f17d3b4faea",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://c708d6e63031497b2148a454a27437a56b6ae9f5e44bb00f05e16814ae911ec5",
+				"dweb:/ipfs/QmetNS7a4qwmiynTXVkG54KPdRFAHz57aaN9BEyjqf5yCM"
+			]
+		},
+		"contracts/interfaces/IModule.sol": {
+			"keccak256": "0xc6fea62e0c2fe10548cb32ff8188b7f036cd072ea2048b664e90b3570ce538fb",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://2a7594ef174c6bce3a502d34269dccf4e7f7382fc521aa9421bf31d000ca3525",
+				"dweb:/ipfs/QmRBnDZnMrsEm45nhTAjzvb7znsKXdVTWy8f6FX1CiH8cu"
+			]
+		},
+		"contracts/interfaces/IPriceOracle.sol": {
+			"keccak256": "0xe7882bdc45986d01ebdbe189ac7b2b42de6ba06d070a331c2de61668ac805a62",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://ad37f4650905c70d415ddc8836e363e8a386f30a9764bb6b3f9fb0e183d73703",
+				"dweb:/ipfs/QmNpk6Q3nAZmh4GDsdPaU56yLR4vuAwnoqQuQzBndDJTVq"
+			]
+		},
+		"contracts/interfaces/ISetToken.sol": {
+			"keccak256": "0x2f24b90ffc5e6bb97b169482fa915e9016fadbaade011a73d352201b396ebe12",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://8fbcd20954a2c646a953586e4a0a1cca0b968b3726c24c304dc3f6a4ce632f72",
+				"dweb:/ipfs/QmQRHbqemSeohZuMWDaNrUaoQUUbP9i9UUdwn4Pph4ayAj"
+			]
+		},
+		"contracts/interfaces/ISetValuer.sol": {
+			"keccak256": "0xfd6d2658d8016f01c317bea67b4f4eb6af2ec2b953aa8a889d929115e045e834",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://c6265b2efc2d6a9bccf1c909e91b1ac6c83ce9aa91f597a7b69572d4ffd8ee8d",
+				"dweb:/ipfs/QmeCnpzApGKUx52HYuRVKG8gKnMchh1gt5BjkGCWW6vV6m"
+			]
+		},
+		"contracts/lib/AddressArrayUtils.sol": {
+			"keccak256": "0x02e1a8a5f6ed402db74bb4bd3fd13041e2b9f93e17e8ca263c202003ef9874a8",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://be3a572a477380c7f473643c0bdd270647c6bc097c959fb1a0348686c1844872",
+				"dweb:/ipfs/QmTgDCb18k72PHZpBpLn6dLx8CXpiPWTRLiUz5KdmYcja8"
+			]
+		},
+		"contracts/lib/ExplicitERC20.sol": {
+			"keccak256": "0x6b68bb213cffd51cbece27b1c7235240d84cc0f6da7a9f2ffeb07e65b3e82299",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://8362c95ef29efaed3cb3f90b623661c2d1b5c20aef58bd9d3ecd375f123b74f1",
+				"dweb:/ipfs/QmfBG1JW7PrjsWf3Zib6hF9UdgPLmpghGSssTh7SAQVUKh"
+			]
+		},
+		"contracts/lib/Invoke.sol": {
+			"keccak256": "0x2de7e36a60fd21158bd18d5ad1029438e8ef56968a7d73311d9ee82c661517ee",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://6a2b560a709c26b35947585a5069804853905b8816af1a332588bf6e6b38b7d9",
+				"dweb:/ipfs/QmTamJ76QyVqVZnk6Rd8h2czQFfzP6nrKhsPj6vrAJCuUY"
+			]
+		},
+		"contracts/lib/ModuleBase.sol": {
+			"keccak256": "0x55d0d483afaeb545eb776eaa94b215e0cb182496d3a3b9fbb497e3e5e08d97b7",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://9318612340faabce229223b1b3e4d1e81b38ae6c7476e63e5b9756b931b22f44",
+				"dweb:/ipfs/QmWW9D4ngTmC6P7sjh3J9ArpxmPN3mbd4BJo6WxtjhgVo6"
+			]
+		},
+		"contracts/lib/Position.sol": {
+			"keccak256": "0x02c5cbb568149293b6715d8f298df643309e69cbf1c29fd62ceb1327e428c2aa",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://ebdb82002fc0bbd71cc63ac38e821603c9612984d650eba399a50323c1a7e8ef",
+				"dweb:/ipfs/QmQKzrYP5a6bpyq4MyCPcXuauZ5ebKPhYYSPnZXHZcyv9J"
+			]
+		},
+		"contracts/lib/PreciseUnitMath.sol": {
+			"keccak256": "0x5846fd768188c3abb41084cd45e9069cbb32022d7924a085c317ed31ec6a8235",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://059eafd78a8397b8d030e088ce7a32f5e6b4d8496a054f58a81fcd94eae0b1d0",
+				"dweb:/ipfs/QmekUPstuKpn8vvabvzVhvEtPFb1GwRSUUkFAtjieWgyUb"
+			]
+		},
+		"contracts/lib/ResourceIdentifier.sol": {
+			"keccak256": "0xd7071e04e50e12dad99a0454e6e2a262004383a692dd81fa560bd5670a8ddbb8",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://7229d152936f49d3adb865f90eb8078908c881cbfa873a063fb506611658d590",
+				"dweb:/ipfs/QmU8oTBfv2e3Kagkz4Fm2xVFHT8sFKpb4qBoSP3CKXecAb"
+			]
+		},
+		"contracts/modules/BasicIssuanceModule.sol": {
+			"keccak256": "0x0cd6f4a42bdd9b0584379f01fc62bcebed86350bcd69a7fd21056c36b87f5639",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://639b790e7e546fd41fbc297edd199c850b946002e2095953b0ab3e731d14154b",
+				"dweb:/ipfs/QmPmNnRNSWdnKE35drn6BCUvnEW2FQk55E8acpqzSa8Fg3"
+			]
+		}
+	},
+	"version": 1
+}

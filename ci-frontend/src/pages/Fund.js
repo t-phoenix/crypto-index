@@ -76,7 +76,7 @@ export default function Fund() {
         <div className="center-in-row" >
             <motion.p whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} onClick={changeAssets} style={{width: '30px', fontSize: '24px', fontWeight: '700', backgroundColor: "#a5e65a", color: '#000000', borderRadius: '8px'}}>↕</motion.p>
         </div>
-        <InputBox inputAmout={outputAmout} setInputAmount={setOutputAmount} inputAmtValue={outputAmtValue} setInputAmtValue={setOutputAmtValue} selectedAsset={selectedOutputAsset} setSelectedAsset={setSelectedOutputAsset} tokensList={isInputINDEX? tokensList: tokensList2}/>
+        <InputBox inputAmout={outputAmout} setInputAmount={setOutputAmount} inputAmtValue={outputAmtValue} setInputAmtValue={setOutputAmtValue} selectedAsset={selectedOutputAsset} setSelectedAsset={setSelectedOutputAsset} isOutput={true} tokensList={isInputINDEX? tokensList: tokensList2}/>
         <br/>
         <br/>
         <br/>

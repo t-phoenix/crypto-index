@@ -4,7 +4,7 @@ import "../styles/common.css";
 import AssetMenu from "./common/AssetMenu";
 import {MdAccountBalanceWallet} from 'react-icons/md'
 
-export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, setInputAmtValue, isMultiAsset, selectedAsset, setSelectedAsset, tokensList }) {
+export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, setInputAmtValue, isMultiAsset, selectedAsset, setSelectedAsset,isOutput = false,  tokensList }) {
   const [showAssetList, setShowAssetList] = React.useState(false);
   
   function onInputChange(e) {
@@ -28,7 +28,7 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
           
         }}
       >
-        <input
+        {!isOutput ? <input
           
           value={inputAmout}
           onChange={onInputChange}
@@ -40,7 +40,8 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
             color: "#C0DA74",
             width: "50%",
           }}
-        />
+        />: <h1 className="output-amount">{Number(inputAmout).toLocaleString()}</h1>
+      }
         <div
           style={{
             display: "flex",
@@ -52,11 +53,11 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
         >
           {tokensList.length ===1  ? 
           <div className="asset-button" style={{backgroundColor: "#303a4f", color: "#ffffff", borderColor: "#cccbcb", borderStyle: "solid"}}>
-            <img src={selectedAsset.src} style={{width: '30px'}}/>
+            <img src={selectedAsset.src} style={{width: '28px'}}/>
             <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
           </div>:
           <motion.div className="asset-button" onClick={handleSelectAsset} whileHover={{scale: 1.1}} whileTap={{scale: 0.9}}>
-            <img src={selectedAsset.src} style={{width: '30px'}}/>
+            <img src={selectedAsset.src} style={{width: '30px', backgroundColor: "#191e29", borderRadius: '25px', marginRight: '4px'}}/>
             <p style={{fontSize: '14px', fontWeight: '640'}}>{selectedAsset.symbol}</p>
           </motion.div>}
           {showAssetList ? (

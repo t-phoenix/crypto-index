@@ -1,0 +1,1240 @@
+{
+	"compiler": {
+		"version": "0.6.10+commit.00c0fcaf"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract IController",
+						"name": "_controller",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IWETH",
+						"name": "_weth",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_feeRecipient",
+						"type": "address"
+					}
+				],
+				"name": "FeeRecipientEdited",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_newManagerFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "ManagerFeeEdited",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_newPremium",
+						"type": "uint256"
+					}
+				],
+				"name": "PremiumEdited",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_newReserveAsset",
+						"type": "address"
+					}
+				],
+				"name": "ReserveAssetAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_removedReserveAsset",
+						"type": "address"
+					}
+				],
+				"name": "ReserveAssetRemoved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_issuer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_hookContract",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_managerFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_premium",
+						"type": "uint256"
+					}
+				],
+				"name": "SetTokenNAVIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_redeemer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_hookContract",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_managerFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_premium",
+						"type": "uint256"
+					}
+				],
+				"name": "SetTokenNAVRedeemed",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					}
+				],
+				"name": "addReserveAsset",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "controller",
+				"outputs": [
+					{
+						"internalType": "contract IController",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_managerFeeRecipient",
+						"type": "address"
+					}
+				],
+				"name": "editFeeRecipient",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_managerFeePercentage",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_managerFeeIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "editManagerFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_premiumPercentage",
+						"type": "uint256"
+					}
+				],
+				"name": "editPremium",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "getExpectedReserveRedeemQuantity",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_reserveAssetQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "getExpectedSetTokenIssueQuantity",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_reserveAssetQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "getIssuePremium",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_managerFeeIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "getManagerFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "getRedeemPremium",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					}
+				],
+				"name": "getReserveAssets",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "contract INAVIssuanceHook",
+								"name": "managerIssuanceHook",
+								"type": "address"
+							},
+							{
+								"internalType": "contract INAVIssuanceHook",
+								"name": "managerRedemptionHook",
+								"type": "address"
+							},
+							{
+								"internalType": "contract ISetValuer",
+								"name": "setValuer",
+								"type": "address"
+							},
+							{
+								"internalType": "address[]",
+								"name": "reserveAssets",
+								"type": "address[]"
+							},
+							{
+								"internalType": "address",
+								"name": "feeRecipient",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256[2]",
+								"name": "managerFees",
+								"type": "uint256[2]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "maxManagerFee",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "premiumPercentage",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "maxPremiumPercentage",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "minSetTokenSupply",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct CustomOracleNavIssuanceModule.NAVIssuanceSettings",
+						"name": "_navIssuanceSettings",
+						"type": "tuple"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_reserveAssetQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "isIssueValid",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					}
+				],
+				"name": "isRedeemValid",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isReserveAsset",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_reserveAssetQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minSetTokenReceiveQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "issue",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minSetTokenReceiveQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "issueWithEther",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "navIssuanceSettings",
+				"outputs": [
+					{
+						"internalType": "contract INAVIssuanceHook",
+						"name": "managerIssuanceHook",
+						"type": "address"
+					},
+					{
+						"internalType": "contract INAVIssuanceHook",
+						"name": "managerRedemptionHook",
+						"type": "address"
+					},
+					{
+						"internalType": "contract ISetValuer",
+						"name": "setValuer",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "feeRecipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxManagerFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "premiumPercentage",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxPremiumPercentage",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minSetTokenSupply",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minReserveReceiveQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "redeem",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_setTokenQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minReserveReceiveQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "redeemIntoEther",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "removeModule",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract ISetToken",
+						"name": "_setToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_reserveAsset",
+						"type": "address"
+					}
+				],
+				"name": "removeReserveAsset",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "weth",
+				"outputs": [
+					{
+						"internalType": "contract IWETH",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"author": "Set Protocol Module that enables issuance and redemption with any valid ERC20 token or ETH if allowed by the manager. Sender receives a proportional amount of SetTokens on issuance or ERC20 token on redemption based on the calculated net asset value using oracle prices. Manager is able to enforce a premium / discount on issuance / redemption to avoid arbitrage and front running when relying on oracle prices. Managers can charge a fee (denominated in reserve asset).",
+			"methods": {
+				"addReserveAsset(address,address)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset to add",
+						"_setToken": "Instance of the SetToken"
+					}
+				},
+				"constructor": {
+					"params": {
+						"_controller": "Address of controller contract",
+						"_weth": "Address of wrapped eth"
+					}
+				},
+				"editFeeRecipient(address,address)": {
+					"params": {
+						"_managerFeeRecipient": "Manager fee recipient",
+						"_setToken": "Instance of the SetToken"
+					}
+				},
+				"editManagerFee(address,uint256,uint256)": {
+					"params": {
+						"_managerFeeIndex": "Manager fee index. 0 index is issue fee, 1 index is redeem fee",
+						"_managerFeePercentage": "Manager fee percentage in 10e16 (e.g. 10e16 = 1%)",
+						"_setToken": "Instance of the SetToken"
+					}
+				},
+				"editPremium(address,uint256)": {
+					"params": {
+						"_premiumPercentage": "Premium percentage in 10e16 (e.g. 10e16 = 1%)",
+						"_setToken": "Instance of the SetToken"
+					}
+				},
+				"getExpectedReserveRedeemQuantity(address,address,uint256)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset",
+						"_setToken": "Instance of the SetToken",
+						"_setTokenQuantity": "Quantity of SetTokens to redeem"
+					},
+					"returns": {
+						"_0": "uint256                     Expected reserve asset quantity redeemed"
+					}
+				},
+				"getExpectedSetTokenIssueQuantity(address,address,uint256)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset",
+						"_reserveAssetQuantity": "Quantity of the reserve asset to issue with",
+						"_setToken": "Instance of the SetToken"
+					},
+					"returns": {
+						"_0": "uint256                     Expected SetTokens to be minted to recipient"
+					}
+				},
+				"initialize(address,(address,address,address,address[],address,uint256[2],uint256,uint256,uint256,uint256))": {
+					"params": {
+						"_navIssuanceSettings": "NAVIssuanceSettings struct defining parameters",
+						"_setToken": "Instance of the SetToken to issue"
+					}
+				},
+				"isIssueValid(address,address,uint256)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset",
+						"_reserveAssetQuantity": "Quantity of the reserve asset to issue with",
+						"_setToken": "Instance of the SetToken"
+					},
+					"returns": {
+						"_0": "bool                        Returns true if issue is valid"
+					}
+				},
+				"isRedeemValid(address,address,uint256)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset",
+						"_setToken": "Instance of the SetToken",
+						"_setTokenQuantity": "Quantity of SetTokens to redeem"
+					},
+					"returns": {
+						"_0": "bool                        Returns true if redeem is valid"
+					}
+				},
+				"issue(address,address,uint256,uint256,address)": {
+					"params": {
+						"_minSetTokenReceiveQuantity": "Min quantity of SetToken to receive after issuance",
+						"_reserveAsset": "Address of the reserve asset to issue with",
+						"_reserveAssetQuantity": "Quantity of the reserve asset to issue with",
+						"_setToken": "Instance of the SetToken contract",
+						"_to": "Address to mint SetToken to"
+					}
+				},
+				"issueWithEther(address,uint256,address)": {
+					"params": {
+						"_minSetTokenReceiveQuantity": "Min quantity of SetToken to receive after issuance",
+						"_setToken": "Instance of the SetToken contract",
+						"_to": "Address to mint SetToken to"
+					}
+				},
+				"redeem(address,address,uint256,uint256,address)": {
+					"params": {
+						"_minReserveReceiveQuantity": "Min quantity of reserve asset to receive",
+						"_reserveAsset": "Address of the reserve asset to redeem with",
+						"_setToken": "Instance of the SetToken contract",
+						"_setTokenQuantity": "Quantity of SetTokens to redeem",
+						"_to": "Address to redeem reserve asset to"
+					}
+				},
+				"redeemIntoEther(address,uint256,uint256,address)": {
+					"params": {
+						"_minReserveReceiveQuantity": "Min quantity of reserve asset to receive",
+						"_setToken": "Instance of the SetToken contract",
+						"_setTokenQuantity": "Quantity of SetTokens to redeem",
+						"_to": "Address to redeem reserve asset to"
+					}
+				},
+				"removeReserveAsset(address,address)": {
+					"params": {
+						"_reserveAsset": "Address of the reserve asset to remove",
+						"_setToken": "Instance of the SetToken"
+					}
+				}
+			},
+			"title": "CustomOracleNavIssuanceModule"
+		},
+		"userdoc": {
+			"methods": {
+				"addReserveAsset(address,address)": {
+					"notice": "SET MANAGER ONLY. Add an allowed reserve asset"
+				},
+				"editFeeRecipient(address,address)": {
+					"notice": "SET MANAGER ONLY. Edit the manager fee recipient"
+				},
+				"editManagerFee(address,uint256,uint256)": {
+					"notice": "SET MANAGER ONLY. Edit manager fee"
+				},
+				"editPremium(address,uint256)": {
+					"notice": "SET MANAGER ONLY. Edit the premium percentage"
+				},
+				"getExpectedReserveRedeemQuantity(address,address,uint256)": {
+					"notice": "Get the expected reserve asset to be redeemed"
+				},
+				"getExpectedSetTokenIssueQuantity(address,address,uint256)": {
+					"notice": "Get the expected SetTokens minted to recipient on issuance"
+				},
+				"initialize(address,(address,address,address,address[],address,uint256[2],uint256,uint256,uint256,uint256))": {
+					"notice": "SET MANAGER ONLY. Initializes this module to the SetToken with hooks, allowed reserve assets, fees and issuance premium. Only callable by the SetToken's manager. Hook addresses are optional. Address(0) means that no hook will be called."
+				},
+				"isIssueValid(address,address,uint256)": {
+					"notice": "Checks if issue is valid"
+				},
+				"isRedeemValid(address,address,uint256)": {
+					"notice": "Checks if redeem is valid"
+				},
+				"issue(address,address,uint256,uint256,address)": {
+					"notice": "Deposits the allowed reserve asset into the SetToken and mints the appropriate % of Net Asset Value of the SetToken to the specified _to address."
+				},
+				"issueWithEther(address,uint256,address)": {
+					"notice": "Wraps ETH and deposits WETH if allowed into the SetToken and mints the appropriate % of Net Asset Value of the SetToken to the specified _to address."
+				},
+				"redeem(address,address,uint256,uint256,address)": {
+					"notice": "Redeems a SetToken into a valid reserve asset representing the appropriate % of Net Asset Value of the SetToken to the specified _to address. Only valid if there are available reserve units on the SetToken."
+				},
+				"redeemIntoEther(address,uint256,uint256,address)": {
+					"notice": "Redeems a SetToken into Ether (if WETH is valid) representing the appropriate % of Net Asset Value of the SetToken to the specified _to address. Only valid if there are available WETH units on the SetToken."
+				},
+				"removeModule()": {
+					"notice": "Removes this module from the SetToken, via call by the SetToken. Issuance settings and reserve asset states are deleted."
+				},
+				"removeReserveAsset(address,address)": {
+					"notice": "SET MANAGER ONLY. Remove a reserve asset"
+				}
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/modules/CustomOracleNAVIssuanceModule.sol": "CustomOracleNavIssuanceModule"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xcc78a17dd88fa5a2edc60c8489e2f405c0913b377216a5b26b35656b2d0dab52",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://526dc85e1f9b9b45830e202568d267d93dde7a4fcccf4ad7798dadcd92304d3c",
+				"dweb:/ipfs/QmaoXMB972J3cSDLtBq3xBo4jLwqD2uzXTwujtSPqkYVhR"
+			]
+		},
+		"@openzeppelin/contracts/math/SignedSafeMath.sol": {
+			"keccak256": "0xd17ac7e1d8f83d20d80e652adfed83da122f3a3c7b69fefa2985d85aebf0a3e9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://64e13936e5e7382737f9c12918f5365fd9e68bf96e83d66f3323f47b1d7162c7",
+				"dweb:/ipfs/Qmd2qkUCFdpAXJ6NNTkPxmkKaPzYYmeBhDey8N8XN39wqw"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0xca0c2396dbeb3503b51abf4248ebf77a1461edad513c01529df51850a012bee3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://991b44ff44e0496e8554a90f4c0512c28faed45104d40430019f3c67ea67740e",
+				"dweb:/ipfs/Qmc3nRapVbcctELoZS5qe17zLkFB3bETBfwzCTMF1CSuGE"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08",
+				"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
+			"keccak256": "0xf12dfbe97e6276980b83d2830bb0eb75e0cf4f3e626c2471137f82158ae6a0fc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b3a849c2d95e85463909e5b5c920b13e7a11216ca14127085e16d22b9379d52a",
+				"dweb:/ipfs/QmUg3CZDbCCcQdroEpexBy5ZFd5vD1UWijWQq9qHZjtJNQ"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x28911e614500ae7c607a432a709d35da25f3bc5ddc8bd12b278b66358070c0ea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://256c8c8af5eb072bc473226ab2b2187149b8fc04f5f4a4820db22527f5ce8e3c",
+				"dweb:/ipfs/QmRvi5BhnL7Rxf85KrJhwM6RRhukm4tzoctRdgQEheNyiN"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x8d3cb350f04ff49cfb10aef08d87f19dcbaecc8027b0bed12f3275cd12f38cf0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ded47ec7c96750f9bd04bbbc84f659992d4ba901cb7b532a52cd468272cf378f",
+				"dweb:/ipfs/QmfBrGtQP7rZEqEg6Wz6jh2N2Kukpj1z5v3CGWmAqrzm96"
+			]
+		},
+		"@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x8bbbc2f5c10065ee272592ae0a7a6ceb23de2fbd81564ee0bb015ecf404d5f61",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b95e56c1640d0ef789fc5c16269e141e992f6c8ac97cc6d377bd3825e9cab182",
+				"dweb:/ipfs/QmVzaxJZY51EhagrcNnkxoU6Uq17RhATe7aHvtkC6wUkgK"
+			]
+		},
+		"@openzeppelin/contracts/utils/SafeCast.sol": {
+			"keccak256": "0x7b2b8baa20fd60ab4a328c8e34c64a353651b80ba4b5b157cbb61813f6f85d55",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://125b7f9efa390e663d630c62b97ae4e0707f31623bea989ef94c97ca9d777dd2",
+				"dweb:/ipfs/QmaaLSuwvqK7wqcgyS3utHgfmB7RntcvP7eJSuvQod8Z9P"
+			]
+		},
+		"contracts/interfaces/IController.sol": {
+			"keccak256": "0x8deb2f94e24e9524ce4de88804c98694781d8f38fbadccc3207d28b8e0ce4911",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://755f656a314737b0eeffbee1b7dc257b751c0764d70f008beb6cccececaeb2d7",
+				"dweb:/ipfs/QmUmFs1ukqWUmfcm5irGYHYZnv8NwMYGD3EUuoA5BvbhER"
+			]
+		},
+		"contracts/interfaces/IIntegrationRegistry.sol": {
+			"keccak256": "0xb9a2f67aa926694fcfa6b9f2300423a253162078b12e3ff0b8c864c5a143c975",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://2448da2adc2ca3c858e2413a0833f7a384e4a9430af0a923411d0d0ff1c5076d",
+				"dweb:/ipfs/QmTEdnKViq2riEoDzfLwuXxtWdieLL8ZfRL7WanfQwXxHf"
+			]
+		},
+		"contracts/interfaces/IModule.sol": {
+			"keccak256": "0xc6fea62e0c2fe10548cb32ff8188b7f036cd072ea2048b664e90b3570ce538fb",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://2a7594ef174c6bce3a502d34269dccf4e7f7382fc521aa9421bf31d000ca3525",
+				"dweb:/ipfs/QmRBnDZnMrsEm45nhTAjzvb7znsKXdVTWy8f6FX1CiH8cu"
+			]
+		},
+		"contracts/interfaces/INAVIssuanceHook.sol": {
+			"keccak256": "0x2e6c8b25e9cd021a504c5c6791188396621f731fa1e49379e837119e0ba8aea9",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://aadf7bf7044b183bd84605fb4e3545374e09a933ea61f423b4b5f3d95d6594b0",
+				"dweb:/ipfs/QmNVG3fzG4aEbRbuUWZdBZcCx963PxQgBRhDmCSPqdGBsh"
+			]
+		},
+		"contracts/interfaces/IPriceOracle.sol": {
+			"keccak256": "0xe7882bdc45986d01ebdbe189ac7b2b42de6ba06d070a331c2de61668ac805a62",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://ad37f4650905c70d415ddc8836e363e8a386f30a9764bb6b3f9fb0e183d73703",
+				"dweb:/ipfs/QmNpk6Q3nAZmh4GDsdPaU56yLR4vuAwnoqQuQzBndDJTVq"
+			]
+		},
+		"contracts/interfaces/ISetToken.sol": {
+			"keccak256": "0x2f24b90ffc5e6bb97b169482fa915e9016fadbaade011a73d352201b396ebe12",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://8fbcd20954a2c646a953586e4a0a1cca0b968b3726c24c304dc3f6a4ce632f72",
+				"dweb:/ipfs/QmQRHbqemSeohZuMWDaNrUaoQUUbP9i9UUdwn4Pph4ayAj"
+			]
+		},
+		"contracts/interfaces/ISetValuer.sol": {
+			"keccak256": "0xfd6d2658d8016f01c317bea67b4f4eb6af2ec2b953aa8a889d929115e045e834",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://c6265b2efc2d6a9bccf1c909e91b1ac6c83ce9aa91f597a7b69572d4ffd8ee8d",
+				"dweb:/ipfs/QmeCnpzApGKUx52HYuRVKG8gKnMchh1gt5BjkGCWW6vV6m"
+			]
+		},
+		"contracts/interfaces/external/IWETH.sol": {
+			"keccak256": "0x13b8b627bea9d36a5c7327fc8787cc03b76adb000dc516e4ce0fa2e7ceb04498",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://dc890ac19c675ebdad7466e2f9cc36c175d52a748d6235525214cbdeacbd3019",
+				"dweb:/ipfs/Qmf9PqwseHoLXcpudrtzVcWur5KbnFBsFt38TJHZ2p9uXM"
+			]
+		},
+		"contracts/lib/AddressArrayUtils.sol": {
+			"keccak256": "0x02e1a8a5f6ed402db74bb4bd3fd13041e2b9f93e17e8ca263c202003ef9874a8",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://be3a572a477380c7f473643c0bdd270647c6bc097c959fb1a0348686c1844872",
+				"dweb:/ipfs/QmTgDCb18k72PHZpBpLn6dLx8CXpiPWTRLiUz5KdmYcja8"
+			]
+		},
+		"contracts/lib/ExplicitERC20.sol": {
+			"keccak256": "0x6b68bb213cffd51cbece27b1c7235240d84cc0f6da7a9f2ffeb07e65b3e82299",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://8362c95ef29efaed3cb3f90b623661c2d1b5c20aef58bd9d3ecd375f123b74f1",
+				"dweb:/ipfs/QmfBG1JW7PrjsWf3Zib6hF9UdgPLmpghGSssTh7SAQVUKh"
+			]
+		},
+		"contracts/lib/Invoke.sol": {
+			"keccak256": "0x2de7e36a60fd21158bd18d5ad1029438e8ef56968a7d73311d9ee82c661517ee",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://6a2b560a709c26b35947585a5069804853905b8816af1a332588bf6e6b38b7d9",
+				"dweb:/ipfs/QmTamJ76QyVqVZnk6Rd8h2czQFfzP6nrKhsPj6vrAJCuUY"
+			]
+		},
+		"contracts/lib/ModuleBase.sol": {
+			"keccak256": "0x55d0d483afaeb545eb776eaa94b215e0cb182496d3a3b9fbb497e3e5e08d97b7",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://9318612340faabce229223b1b3e4d1e81b38ae6c7476e63e5b9756b931b22f44",
+				"dweb:/ipfs/QmWW9D4ngTmC6P7sjh3J9ArpxmPN3mbd4BJo6WxtjhgVo6"
+			]
+		},
+		"contracts/lib/Position.sol": {
+			"keccak256": "0x02c5cbb568149293b6715d8f298df643309e69cbf1c29fd62ceb1327e428c2aa",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://ebdb82002fc0bbd71cc63ac38e821603c9612984d650eba399a50323c1a7e8ef",
+				"dweb:/ipfs/QmQKzrYP5a6bpyq4MyCPcXuauZ5ebKPhYYSPnZXHZcyv9J"
+			]
+		},
+		"contracts/lib/PreciseUnitMath.sol": {
+			"keccak256": "0x5846fd768188c3abb41084cd45e9069cbb32022d7924a085c317ed31ec6a8235",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://059eafd78a8397b8d030e088ce7a32f5e6b4d8496a054f58a81fcd94eae0b1d0",
+				"dweb:/ipfs/QmekUPstuKpn8vvabvzVhvEtPFb1GwRSUUkFAtjieWgyUb"
+			]
+		},
+		"contracts/lib/ResourceIdentifier.sol": {
+			"keccak256": "0xd7071e04e50e12dad99a0454e6e2a262004383a692dd81fa560bd5670a8ddbb8",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://7229d152936f49d3adb865f90eb8078908c881cbfa873a063fb506611658d590",
+				"dweb:/ipfs/QmU8oTBfv2e3Kagkz4Fm2xVFHT8sFKpb4qBoSP3CKXecAb"
+			]
+		},
+		"contracts/modules/CustomOracleNAVIssuanceModule.sol": {
+			"keccak256": "0x31f11da828bf0b6a3275e9d42781ae0257bf0e7c468f7415ee7e49fadca4eaa1",
+			"license": "Apache License",
+			"urls": [
+				"bzz-raw://abd3d1582b258721c00b65c6bb08369fbbb98c0f8a571d4fca1d403e952996ac",
+				"dweb:/ipfs/QmSLFsz7ABsbb6xwZfbcuPt1w7R6LSPxF68bPCq4Lgo6yW"
+			]
+		}
+	},
+	"version": 1
+}
