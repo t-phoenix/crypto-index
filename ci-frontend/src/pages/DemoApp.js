@@ -10,13 +10,60 @@ import SubNav from "../components/common/SubNav";
 import bitcoin from "../assets/btc.svg"
 import ethereum from "../assets/eth.svg";
 import tether from "../assets/usdt.svg"
+import { useContractReads } from "wagmi";
+import { issue, usdt, wbtc, weth } from "../constants/contractAddress";
+import { ERCToken_ABI } from "../abis/ERCToken";
 
 
 export default function DemoApp() {
     const account = useAccount();
-    //price of INDEX = 1 BTC + 5ETH + 100USDT
+    const erctokenBalance = {
+      abi: ERCToken_ABI,
+      functionName: 'balanceOf',
+      args: [account.address]
+    }
+    const erctokenAllowance ={
+      abi: ERCToken_ABI,
+      functionName: 'allowance',
+      args: [account.address, issue]
+    }
+    const {data} = useContractReads({
+      contracts: [
+        {
+          ...erctokenBalance,
+          address: wbtc,
+        },
+        {
+          ...erctokenBalance,
+          address: weth,  
+        },
+        {
+          ...erctokenBalance,
+          address: usdt,
+        },
+        {
+          ...erctokenAllowance,
+          address: wbtc,
+        },
+        {
+          ...erctokenAllowance,
+          address: weth,
+        },
+        {
+          ...erctokenAllowance,
+          address: usdt
+        }
+      ]
+    })
+
+    {data && console.log("Your BTC and ETH Balance",  Number(data[3])/10**18, Number(data[4])/10**18)}
+    
+
+
     const tokensList =[{name:"Crypto Index", symbol: "INDEX", src: CiLogo , address: "", balance: "2", value: "200", price: "100"}] 
-    const outputTokensList = [{name:"Bitcoin", symbol: "BTC", src: bitcoin , address: "", balance: "0.0013", value: "68.90", price: "52315.54"}, {name:"Ethereum", symbol: "ETH", src:ethereum, address:"", balance: "0.14", value: "322", price: "3219.28" }, {name:"Tether", symbol:"USDT", src:tether, address:"", balance: "100", value: "100", price: "1.00"}]
+    const outputTokensList = [{name:"Bitcoin", symbol: "BTC", src: bitcoin , address: "", balance: data && Number(data[0])/10**18, value: "68.90", price: "52315.54", delegateBalance: data && Number(data[3])/10**18}, 
+                              {name:"Ethereum", symbol: "ETH", src:ethereum, address:"", balance: data && Number(data[1])/10**18, value: "322", price: "3219.28", delegateBalance: data && Number(data[4])/10**18 }, 
+                              {name:"Tether", symbol:"USDT", src:tether, address:"", balance: data && Number(data[2])/10**18, value: "100", price: "1.00", delegateBalance: data && Number(data[5])/10**18}]
 
     const appOptions = [{id: 'mint', title: "MINT"}, {id: "redeem", title: "REDEEM"}]
 
@@ -40,7 +87,7 @@ export default function DemoApp() {
     <div className="main-content">
       <div className="trade-box">
         <br />
-        <h1 style={{ textAlign: "start" }}>INDEX</h1>
+        {selectedAppOption.id === "mint" ? <h1 style={{ textAlign: "start" }}>Mint INDEX</h1> : <h1 style={{ textAlign: "start" }}>Redeem INDEX</h1>}
         <p style={{ textAlign: "start", fontSize: '12px' }}>Test the app with Basic Issue Module (Testnet)</p>
         <p
           style={{
@@ -51,7 +98,7 @@ export default function DemoApp() {
             fontWeight: "700",
           }}
         >
-          〽️ 1 INDEX = 1BTC + 5ETH + 100 USDT
+          〽️ 1 INDEX = 1 BTC + 20 ETH + 8000 USDT
         </p>
         <br/>
         <SubNav options={appOptions} selectedOption={selectedAppOption} setSelectedOption={setSelectedAppOption}/>
@@ -60,13 +107,13 @@ export default function DemoApp() {
         <InputBox
           inputAmout={inputAmout} setInputAmount={setInputAmount} inputAmtValue={inputAmtValue} setInputAmtValue={setInputAmtValue} isMulyiAsset={false} selectedAsset={selectedInputAsset} setSelectedAsset={setSelectedInputAsset} tokensList={tokensList}
         />
-        <MultiAsset outputAmount={outputAmount}  outputTokensList = {outputTokensList}/>
+        {data && <MultiAsset enableDelegate={selectedAppOption.id === "mint" ? true : false} outputAmount={outputAmount}  outputTokensList = {outputTokensList}/>}
         
         
         <br />
         {account.address ? (
           <div className="center-in-row">
-            {selectedAppOption.id == "mint" ? <button>Mint</button>: <button>Redeem</button>}
+            {selectedAppOption.id === "mint" ? <button>Mint</button>: <button>Redeem</button>}
           </div>
         ) : (
           <Web3Button />

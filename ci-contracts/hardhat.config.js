@@ -4,6 +4,14 @@ require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  etherscan: {
+    apiKey: {
+      bscTestnet: process.env.BSCSCAN_API_KEY
+    }
+  },
+  // bscscan: {
+  //   apiKey: process.env.BSCSCAN_API_KEY
+  // },
   solidity: {
     version: "0.6.10",
     settings: {
@@ -17,14 +25,13 @@ module.exports = {
   networks: {
     hardhat: {
       //forking bsc testnet 
-      // forking: {
-      //   enabled: true,
-      //   url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
-      //   chainId: 97,
-      //   gasPrice: 20000000000,
-      // },
+      forking: {
+        enabled: true,
+        url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
+        chainId: 97,
+      },
     },
-    testnet: {
+    bscTestnet: {
       // url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
       url: "https://go.getblock.io/213b9fb34989438991dce4f8831e6679",
       chainId: 97,

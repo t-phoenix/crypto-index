@@ -5,16 +5,39 @@ import Overview from "../components/analytics/Overview";
 import HistoryGraph from "../components/analytics/HistoryGraph";
 import Composition from "../components/analytics/Composition";
 import ContractInfo from "../components/analytics/ContractInfo";
- 
+import { useContractReads } from "wagmi"; 
+import { index } from "../constants/contractAddress";
+import { SetTokenABI } from "../abis/SetToken";
+import {getBitcoinPrice, getEthereumPrice, getTetherPrice } from "../services/geckoApi"
 
 
 export default function Analytics() {
-  const overviewData = [
+  const {data} = useContractReads({
+    contracts: [
+      {
+        address: index,
+        abi: SetTokenABI,
+        functionName: 'totalSupply'
+      }
+      
+    ]
+  })
+
+  const [overviewData, setOverviewData] = React.useState([
     { title: "Asset Under Management", value: "47657990.95" },
-    { title: "Token In Circulation", value: "32846" },
-    { title: "Index Price", value: "9759.65" },
+    { title: "Token In Circulation", value: Number(data[0])/ 10**18},
+    { title: "Index Price", value: "146700.8"},
     { title: "Denomination Asset", value: "USDT" },
-  ];
+  ]);
+  //1 BTC, 20 ETH 8000 USDT
+  // console.log("Total INDEX token supply: ", data[0])
+
+  
+  
+  
+
+  
+
 
   return (
     <div className="main-content">
@@ -24,8 +47,23 @@ export default function Analytics() {
           A balanced Crypto Index Fund to simplify Crypto Investments in a
           structured format to mitigate the risks. (Testnet)
         </p>
-        <Overview data={overviewData}/>
-        <HistoryGraph />
+        
+        <p
+          style={{
+            textAlign: "start",
+            fontSize: "14px",
+            color: "#a5e65a",
+            marginTop: "24px",
+            fontWeight: "700",
+          }}
+        >
+          〽️ 1 INDEX = 1 BTC + 20 ETH + 8000 USDT
+        </p>
+        
+        
+        <br/>
+        <Overview />
+        {/* <HistoryGraph /> */}
         <Composition />
         <ContractInfo />
 

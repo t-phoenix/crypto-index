@@ -56,8 +56,8 @@ export default function Fund() {
 
       <div className="trade-box">
         <br/>
-        <h1 style={{ textAlign: "start" }}>INVEST</h1>
-        <p style={{ textAlign: "start", fontSize: '12px' }}>Become an early investor to support the project (Mainnet)</p>
+        <h1 style={{ textAlign: "start" }}>Swap</h1>
+        <p style={{ textAlign: "start", fontSize: '12px' }}>Swap the token directly with assets (coming soon)</p>
         <p
           style={{
             textAlign: "start",
@@ -87,7 +87,10 @@ export default function Fund() {
         </div>
         <br/>
         <br/>
-        {account.address ? <div className="center-in-row"><button onClick={buyINDEX}>Fund</button></div> : <Web3Button />}
+        <div className="center-in-row" >
+        <button style={{backgroundColor: "#cccbcb"}}>Coming Soon</button>
+        </div>
+        {/* {account.address ? <div className="center-in-row"><button onClick={buyINDEX}>Fund</button></div> : <Web3Button />} */}
         
         <br/>
         <br/>

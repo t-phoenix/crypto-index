@@ -1,12 +1,12 @@
 export const navlinks = [
   
   {
-    name: 'Fund',
-    link: '/fund'
+    name: 'Swap',
+    link: '/swap'
   },
   {
-    name: 'App',
-    link: '/demoapp'
+    name: 'Mint',
+    link: '/mint'
   },
   {
     name: 'Analytics',
