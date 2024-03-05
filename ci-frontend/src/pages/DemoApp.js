@@ -220,7 +220,7 @@ export default function DemoApp() {
         />
         <br />
         <br />
-        {data[6] && (
+        {data && (
           <InputBox
             inputAmout={inputAmout}
             setInputAmount={setInputAmount}

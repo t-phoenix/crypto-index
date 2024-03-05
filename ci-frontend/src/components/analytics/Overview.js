@@ -40,7 +40,7 @@ export default function Overview (){
       const indexprice = btcprice + 20*ethprice + 8000;
       console.log("Price of INDEX token:", indexprice)
       setIndexPrice(indexprice)
-      if(data[0]){
+      if(data){
         setAum((data[0]/10**18)*indexprice)
       }
       
@@ -61,7 +61,7 @@ const { scrollX } = useScroll({
             <p className="box-title">Asset Under Management</p>
           </div>
           <div className="small-box">
-            <h3 className="box-data">🪙 {data[0] ? Number(data[0]/10**18).toLocaleString(): 4.27} INDEX</h3>
+            <h3 className="box-data">🪙 {data ? Number(data[0]/10**18).toLocaleString(): 4.27} INDEX</h3>
             <p className="box-title">Token In Circulation</p>
           </div>
           <div className="small-box">

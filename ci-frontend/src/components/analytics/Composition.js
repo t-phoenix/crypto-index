@@ -56,16 +56,18 @@ export default function Composition(){
           setBTCPrice(btcprice);
           setETHPrice(ethprice);
           setUSDTPrice(usdtprice);
-          const btc_value = (Number(data[0])/10**18)*btcprice;
-          const eth_value = (Number(data[1])/10**18)*ethprice;
-          const usdt_value = (Number(data[2])/10**18)*usdtprice;
-          const total_value = btc_value + eth_value + usdt_value;
-          setBTCValue(btc_value)
-          setETHValue(eth_value)
-          setUSDTValue(usdt_value)
-          setBTCAllocation(btc_value*100/total_value);
-          setETHAllocation(eth_value*100/total_value);
-          setUSDTAllocation(usdt_value*100/total_value);  
+          if(data){
+            const btc_value = (Number(data[0])/10**18)*btcprice;
+            const eth_value = (Number(data[1])/10**18)*ethprice;
+            const usdt_value = (Number(data[2])/10**18)*usdtprice;
+            const total_value = btc_value + eth_value + usdt_value;
+            setBTCValue(btc_value)
+            setETHValue(eth_value)
+            setUSDTValue(usdt_value)
+            setBTCAllocation(btc_value*100/total_value);
+            setETHAllocation(eth_value*100/total_value);
+            setUSDTAllocation(usdt_value*100/total_value); 
+          } 
         } catch (error) {
           console.log("Error setting data:", error)
           setBTCPrice("64034.56");
