@@ -1,28 +1,18 @@
 export const navlinks = [
   
   {
-    name: 'Swap',
-    link: '/swap'
+    name: 'ANALYTICS',
+    link: '/analytics'
   },
   {
-    name: 'Mint',
+    name: 'MINT',
     link: '/mint'
   },
   {
-    name: 'Analytics',
-    link: '/analytics'
-  }
+    name: 'SWAP',
+    link: '/swap'
+  },
   
 
   
 ];
-
-// BOTH will be in Demo App
-// {
-//   name: 'Mint',
-//   link: '/mint',
-// },
-// {
-//   name: 'Faucet',
-//   link: '/faucet',
-// },

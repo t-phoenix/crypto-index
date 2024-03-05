@@ -78,7 +78,7 @@ export default function InputBox({ inputAmout, setInputAmount, inputAmtValue, se
           fontSize: "12px"
         }}
       >
-        <p>$ {Number(inputAmtValue).toFixed(4)}</p>
+        <p>$ {Number(inputAmtValue).toLocaleString()}</p>
         <p style={{marginRight: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
           <MdAccountBalanceWallet size={20} style={{marginRight: '2px'}}/> : {selectedAsset.balance} {selectedAsset.symbol}
         </p>

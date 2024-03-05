@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useRef} from "react";
 import tether from "../../assets/usdt.svg"
 import CiLogo from "../../assets/CiLogo.png";
 import { useContractReads } from "wagmi"; 
 import { index } from "../../constants/contractAddress";
 import { SetTokenABI } from "../../abis/SetToken";
 import {getBitcoinPrice, getEthereumPrice, getTetherPrice } from "../../services/geckoApi"
+import { useScroll } from "framer-motion";
 
 
 export default function Overview (){
@@ -45,9 +46,13 @@ export default function Overview (){
     }
     
   }
+  const carouselRef = useRef(null)
+const { scrollX } = useScroll({
+  container: carouselRef
+})
 
     return(
-        <div className="center-in-row">
+        <div className="center-in-row" ref={carouselRef}>
           <div className="small-box">
             <h3 className="box-data">${Number(aum).toLocaleString()}</h3>
             <p className="box-title">Asset Under Management</p>

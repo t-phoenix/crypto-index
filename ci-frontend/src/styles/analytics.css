@@ -7,6 +7,13 @@
   
   }
 
+  .analytics-box{
+    width: "900px";
+    text-align: "start";
+  }
+
+
+
   .simple-row{
     display: flex;
     flex-direction: row;

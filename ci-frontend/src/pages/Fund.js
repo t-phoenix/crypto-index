@@ -10,6 +10,7 @@ import tether from "../assets/usdt.svg"
 import OutBoxput from "../components/OutputBox";
 import { useAccount } from "wagmi";
 import { Web3Button } from "@web3modal/react";
+import { getBitcoinPrice, getEthereumPrice, getTetherPrice } from "../services/geckoApi";
 
 export default function Fund() {
     const account = useAccount()
@@ -32,9 +33,7 @@ export default function Fund() {
     React.useEffect(()=>{
         const calculatedOutputAmount = inputAmout*selectedInputAsset.price/selectedOutputAsset.price
         setOutputAmount(calculatedOutputAmount);
-        setOutputAmtValue(calculatedOutputAmount*selectedOutputAsset.price)
-        // const calculateInputAmount = outputAmout*selectedOutputAsset.price/selectedInputAsset.price
-        // setInputAmount(calculateInputAmount)
+        setOutputAmtValue(calculatedOutputAmount*selectedOutputAsset.price);
     }, [inputAmout])
 
     function changeAssets(){
@@ -48,6 +47,27 @@ export default function Fund() {
 
     function buyINDEX(){
         toast(`${outputAmout} INDEX minted succesfully. \n Transaction:  ${account.address}`)
+    }
+
+
+    const [indexPrice, setIndexPrice] = React.useState("146700.8")
+
+    React.useEffect(()=>{
+      setPrices()
+    },[])
+  
+    async function setPrices(){
+      try {
+        const btcprice = await getBitcoinPrice();
+        const ethprice = await getEthereumPrice();
+        const usdtprice = await getTetherPrice();
+        const indexprice = btcprice + (20*ethprice) + (8000*usdtprice);
+        console.log("Price of INDEX token:", indexprice)
+        setIndexPrice(indexprice)
+      } catch (error) {
+        console.log("Error setting data:", error)
+      }
+      
     }
 
 
@@ -67,7 +87,7 @@ export default function Fund() {
             fontWeight: "700",
           }}
         >
-          〽️ 1 INDEX = $100
+          〽️ 1 INDEX = $ {Number(indexPrice).toLocaleString()}
         </p>
         <br/>
         <br/>
