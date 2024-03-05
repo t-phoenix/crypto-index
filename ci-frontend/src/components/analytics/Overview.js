@@ -61,7 +61,7 @@ const { scrollX } = useScroll({
             <p className="box-title">Asset Under Management</p>
           </div>
           <div className="small-box">
-            <h3 className="box-data">🪙 {data[0] && Number(data[0]/10**18).toLocaleString()} INDEX</h3>
+            <h3 className="box-data">🪙 {data[0] ? Number(data[0]/10**18).toLocaleString(): 4.27} INDEX</h3>
             <p className="box-title">Token In Circulation</p>
           </div>
           <div className="small-box">
