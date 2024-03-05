@@ -57,7 +57,7 @@ export default function HistoryGraph() {
         <SubNav options={coins} selectedOption={selectedAsset} setSelectedOption={setSelectedAsset}/>
         <SubNav options={timeperiods} selectedOption={selectedTimePeriod} setSelectedOption={setSelectedTimePeriod}/>
       </div>
-      <LineChart
+      {chartData && <LineChart
         width={900}
         height={600}
         data={chartData}
@@ -71,7 +71,7 @@ export default function HistoryGraph() {
         <YAxis domain={['auto', 'auto']}/>
         <Tooltip cursor={{ strokeWidth:2 }} contentStyle={{backgroundColor: "#000", borderRadius: '10px'}}/>
         <Legend />
-      </LineChart>
+      </LineChart>}
     </div>
   );
 }
