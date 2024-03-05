@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/header.css";
 import { Web3Button } from "@web3modal/react";
-import { useNetwork } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
@@ -10,6 +10,7 @@ import CiLogo from "../assets/CiLogo.png"
 
 
 export default function Header() {
+  const account = useAccount();
   const { chain } = useNetwork();
   const navigate = useNavigate();
   console.log("Chain: ", chain);
@@ -28,7 +29,7 @@ export default function Header() {
       {isTab ? (
         <div className="header-container">
           <div className="nav-burger" onClick={openNavBar}>
-            <IoMenu />
+            {account.address && <IoMenu />}
           </div>
           <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
           {/* <img src={CiLogo} style={{width: '30px'}} alt="Crypto Index Logo"/> */}
@@ -42,7 +43,7 @@ export default function Header() {
             <h2 className="title">CRYPTO INDEX</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>
-          <Navbar setShow={setShowMenu}/>
+          {account.address && <Navbar setShow={setShowMenu}/>}
         </div>
       )}
       {
