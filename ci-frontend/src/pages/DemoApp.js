@@ -88,7 +88,7 @@ export default function DemoApp() {
       symbol: "INDEX",
       src: CiLogo,
       address: "",
-      balance: data[6] && Number(data[6]) / 10 ** 18,
+      balance: Number(data[6]) / 10 ** 18,
       value: "200",
       price: indexPrice,
     },
