@@ -19,6 +19,7 @@ export default function HistoryGraph() {
   
 
     const [chartData, setChartData] = React.useState("");
+    const [chartError, setChartError] = React.useState(null);
     //const dataFORMAT = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, ...];
     const [selectedAsset, setSelectedAsset] = useState(coins[0])
     const [selectedTimePeriod, setSelectedTimePeriod] = useState(timeperiods[0])
@@ -45,6 +46,7 @@ export default function HistoryGraph() {
     } catch (error) {
       console.log("Could not Historical Price Data: ", error);
       toast(error)
+      setChartError(error.msg)
     }
   }
 
@@ -57,7 +59,7 @@ export default function HistoryGraph() {
         <SubNav options={coins} selectedOption={selectedAsset} setSelectedOption={setSelectedAsset}/>
         <SubNav options={timeperiods} selectedOption={selectedTimePeriod} setSelectedOption={setSelectedTimePeriod}/>
       </div>
-      {chartData && <LineChart
+      {chartError === null  ? <LineChart
         width={900}
         height={600}
         data={chartData}
@@ -71,7 +73,15 @@ export default function HistoryGraph() {
         <YAxis domain={['auto', 'auto']}/>
         <Tooltip cursor={{ strokeWidth:2 }} contentStyle={{backgroundColor: "#000", borderRadius: '10px'}}/>
         <Legend />
-      </LineChart>}
+      </LineChart>: 
+      <div>
+        <h1>{chartError}</h1>
+      <p>Could not fetch data, try again later</p>
+      </div>}
     </div>
   );
 }
+
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+// header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
