@@ -2,6 +2,10 @@
 
 A decentralised Crypto INDEX Fund Dapp, to monitor and invest in cryptocurrencies smartly
 
+🍎 [DEMO APP](https://crypto-index-wine.vercel.app/)
+
+🎞 [DEMO VIDEO](https://youtu.be/zURbqoXQcr0)
+
 ## 📝 Description:
 
 Welcome to Crypto INDEX Fund Basket, your gateway to simplified, diversified cryptocurrency investments. As the crypto market evolves and expands, navigating the complexities of individual tokens can be a daunting task. That's where Crypto INDEX comes to your rescue, offering you a smarter and more accessible way to invest in the exciting world of cryptocurrencies.

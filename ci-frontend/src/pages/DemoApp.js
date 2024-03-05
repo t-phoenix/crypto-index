@@ -208,7 +208,7 @@ export default function DemoApp() {
           〽️ 1 INDEX = 1 BTC + 20 ETH + 8000 USDT
         </p>
         </div>
-        <motion.div onClick={()=>window.location.reload()} whileHover={{rotate: '270deg', scale: 1.2}} transition={{duration: 0.3}} whileTap={{scale: 0.8}} style={{x: "-20px", y: "20px", borderRadius: '10px', backgroundColor: '#303a4f', height: "36px", width: '36px',display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '4px', marginLeft: '10vw'}}>
+        <motion.div onClick={()=>window.location.reload()} whileHover={{rotate: '270deg', scale: 1.2}} transition={{duration: 0.3}} whileTap={{scale: 0.8}} style={{x: "-20px", y: "20px", borderRadius: '10px', backgroundColor: '#303a4f', height: "36px", width: '36px',display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '4px', marginLeft: '6vw'}}>
           <IoMdRefresh size={24}/>
         </motion.div>
         </div>
