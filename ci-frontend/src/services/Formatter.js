@@ -12,13 +12,13 @@ export const formatAddress = (addr) => {
 export function formatUNIXDate(unix_timestamp){
     var date = new Date(unix_timestamp );
     var todateString = date.toLocaleDateString()
-    console.log(todateString);
+    // console.log(todateString);
     return todateString
   }
 
  export function formatUNIXTime(unix_timestamp){
     var date = new Date(unix_timestamp );
     var toTimeString = date.toLocaleTimeString();
-    console.log(toTimeString)
+    // console.log(toTimeString)
     return toTimeString
   }

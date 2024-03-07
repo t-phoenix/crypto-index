@@ -29,7 +29,7 @@ export default function HistoryGraph() {
     },[selectedAsset, selectedTimePeriod])
 
   async function fetchHistoricalPriceData(asset, time) {
-    
+    console.log("Previous Fetching Error: ", chartError)
     try {
       const result = await client.get(
         `/coins/${asset.id}/market_chart?vs_currency=usd&days=${time.day}`
@@ -41,12 +41,13 @@ export default function HistoryGraph() {
         priceList.push({date: formatUNIXDate(element[0]), time: formatUNIXTime(element[0]), price: element[1]})
       }
       setChartData(priceList);
+      setChartError(null)
       toast("Graph Updated")
     //   localStorage.setItem(coinId, priceList)
     } catch (error) {
-      console.log("Could not Historical Price Data: ", error);
-      toast(error)
-      setChartError(error.msg)
+      console.log("Could not Historical Price Data: ", error.message);
+      toast(error.message)
+      setChartError(error.message)
     }
   }
 
@@ -59,7 +60,12 @@ export default function HistoryGraph() {
         <SubNav options={coins} selectedOption={selectedAsset} setSelectedOption={setSelectedAsset}/>
         <SubNav options={timeperiods} selectedOption={selectedTimePeriod} setSelectedOption={setSelectedTimePeriod}/>
       </div>
-      {chartError === null  ? <LineChart
+      {chartError === "Network Error" ?
+      <div style={{width: '100%', height:'20vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>
+      <p>Too many Request! Could not fetch data</p>
+      <p>Try again Later</p>
+      </div> : 
+      <LineChart
         width={900}
         height={600}
         data={chartData}
@@ -73,11 +79,8 @@ export default function HistoryGraph() {
         <YAxis domain={['auto', 'auto']}/>
         <Tooltip cursor={{ strokeWidth:2 }} contentStyle={{backgroundColor: "#000", borderRadius: '10px'}}/>
         <Legend />
-      </LineChart>: 
-      <div>
-        <h1>{chartError}</h1>
-      <p>Could not fetch data, try again later</p>
-      </div>}
+      </LineChart>
+      }
     </div>
   );
 }
