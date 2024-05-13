@@ -4,21 +4,112 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
+
+
+// PHASE 1
+// REQUIRE FORKING TO ACCESS OTHER PROTOCOLS
+// IMPERSONATE HIGH NETWORTH WALLETS
+// SETTING OWNER AS ACCOUNT[0]
+// GET USDT/ WETH/ WBTC CONTRACTS
+// PRINT BALANCES OF ALL ACCOUNTS
+
+// PHASE 2
+// DEPLOY CONTROLLER
+// DEPLOY BIM MODULE
+// INIT CONTROLLER
+// DEPLOY BLUE CHIP SET TOKEN
+// ADD BLUE CHIP SET TO CONTROLLER
+// INIT BIM
+// DELEGATE USDT/ WETH/ WBTC TO BIM
+// TESTING UNITS AND COMPONENTS
+
+
+// PHASE 3
+// ISSUE BLUE CHIP SET TOKEN
+// ISSUE BLUE CHIP SET TOKEN FOR OTHER ACCOUNTS
+// CHECK UPDATED BALANCES
+// CHECK BLUE CHIP SET TOKEN CONTRACT BALANCE
+
+
+// PHASE 4
+// DEPLOY NAV ISSUE MODULE
+// 
+
+
+
+
+
+
 const hre = require("hardhat");
+// const v3InterfaceABI = require('./v3InterfaceABI');
+
+const aggregatorV3InterfaceABI = [
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "description",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint80", name: "_roundId", type: "uint80" }],
+    name: "getRoundData",
+    outputs: [
+      { internalType: "uint80", name: "roundId", type: "uint80" },
+      { internalType: "int256", name: "answer", type: "int256" },
+      { internalType: "uint256", name: "startedAt", type: "uint256" },
+      { internalType: "uint256", name: "updatedAt", type: "uint256" },
+      { internalType: "uint80", name: "answeredInRound", type: "uint80" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "latestRoundData",
+    outputs: [
+      { internalType: "uint80", name: "roundId", type: "uint80" },
+      { internalType: "int256", name: "answer", type: "int256" },
+      { internalType: "uint256", name: "startedAt", type: "uint256" },
+      { internalType: "uint256", name: "updatedAt", type: "uint256" },
+      { internalType: "uint80", name: "answeredInRound", type: "uint80" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "version",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+]
+
 
 async function main() {
+  //----------------------------------------------//
+  // PHASE 1
+  //----------------------------------------------//
   // mint 1 million wETH/ wBTC 
   const INITIAL_SUPPLY = 1000000;
 
-  // Impoersonate hogh networth wallets
+  // Impoersonate high networth wallets
   let accounts = [];
   accounts[0] = await ethers.getImpersonatedSigner("0x0AFF6665bB45bF349489B20E225A6c5D78E2280F");
-  accounts[1] = await ethers.getImpersonatedSigner("0x52D7e382fAEB0E792CE32b43e81920F2Bf788502");
-  accounts[2] = await ethers.getImpersonatedSigner("0x21Cb017B40abE17B6DFb9Ba64A3Ab0f24A7e60EA");
+  accounts[1] = await ethers.getImpersonatedSigner("0x1680eD6A1fE73c673E778705355212235DeC3242");
+  accounts[2] = await ethers.getImpersonatedSigner("0x4e287E1271630757424E06192943eD19DF553B41");
   
   // setting owner
   const owner = accounts[0];
-  console.log("OWNER ADDRESS: ", owner)
+  console.log("OWNER ADDRESS: ", owner.address)
 
   // Polygon Mainnet
   // USDT - 0xc2132D05D31c914a87C6611C10748AEb04B58e8F
@@ -49,8 +140,9 @@ async function main() {
   }
   
 
-  
-
+  //----------------------------------------------//
+  // PHASE 2
+  //----------------------------------------------//
 
   // Deploy Controller
   const controller = await ethers.deployContract("Controller", [owner]);
@@ -100,6 +192,10 @@ async function main() {
   console.log("POSITIONS: ", positions);
 
 
+  //----------------------------------------------//
+  // PHASE 3
+  //----------------------------------------------//
+
 
   // Issue BLUE CHIP tokens
   const tokenSupply = await blueChip.totalSupply();
@@ -122,7 +218,7 @@ async function main() {
     const balancewETH = await wETH.balanceOf(account);
     const balancewBTC = await wBTC.balanceOf(account);
     const balanceBLUE = await blueChip.balanceOf(account);
-    console.log(account.address, ' MATIC: ',  String(balance)/10**18, ' WETH: ', String(balancewETH)/10**18, ' WBTC: ', String(balancewBTC)/10**8, ' BLUE: ', String(balanceBLUE));
+    console.log(account.address, ' MATIC: ',  String(balance)/10**18, ' WETH: ', String(balancewETH)/10**18, ' WBTC: ', String(balancewBTC)/10**8, ' BLUE: ', String(balanceBLUE)/10**8);
   
   }
 
@@ -130,6 +226,53 @@ async function main() {
   const BLUEwBTCbalance = await wBTC.balanceOf(blueChip.target);
   const BLUEwETHbalance =  await wETH.balanceOf(blueChip.target);
   console.log("BLUE Balance| wBTC:", String(BLUEwBTCbalance)/10**8, ' wETH: ', String(BLUEwETHbalance)/10**18);
+
+
+  //----------------------------------------------//
+  // PHASE 4
+  //----------------------------------------------//
+  // Controller
+  // masterQuoteAsset - address of asset that can be used to link unrelated asset prices
+  // Adapters - used to price assets created by other protocols
+  // assetOnes - list of first asset in pair
+  // assetTwos - list of second asset in pair
+  // Oracles - list of oracles
+  
+  // BTC/USD - 0xc907E116054Ad103354f2D350FD2514433D57F6f
+  // ETH/USD - 0xF9680D99D6C9589e2a93a78A04A279e509205945
+  // BTC/ETH - 0x19b0F0833C78c0848109E3842D34d2fDF2cA69BA
+
+  // USDT/ ETH - 0xf9d5AAC6E5572AEFa6bd64108ff86a222F69B64d
+  // USDT/ USD - 0x0A6513e40db6EB1b165753AD52E80663aeA50545
+
+
+  const v3Contract = await hre.ethers.getContractAt(aggregatorV3InterfaceABI, '0xc907E116054Ad103354f2D350FD2514433D57F6f');
+  console.log("V3 Contract: ", v3Contract);
+  const btcusdPrice = await v3Contract.latestRoundData();
+  console.log("BTC USD Price: ", btcusdPrice)
+
+
+
+
+  const priceOracle = await ethers.deployContract("PriceOracle", [controller.target, USDT_ADDRESS, [], [wBTC_ADDRESS, wETH_ADDRESS], [USDT_ADDRESS, USDT_ADDRESS],   ['0xc907E116054Ad103354f2D350FD2514433D57F6f', '0xF9680D99D6C9589e2a93a78A04A279e509205945'] ])
+  console.log("Price Oracle: ", priceOracle.target);
+
+  // must connect to controller for {controller.isSystemContract(msg.sender)}
+  controller.addResource(priceOracle.target, 1);
+
+  // const checkSystemContract = await controller.isSystemContract(accounts[0]);
+  // console.log("Check if accounts[0] is system contract: ", checkSystemContract );
+
+
+  const ethusdtprice = await priceOracle.connect(accounts[0]).getPrice(wETH_ADDRESS,USDT_ADDRESS);
+  console.log("ETH/ USDT Price: ", String(ethusdtprice)/10**18 );
+
+  const btcusdtprice = await priceOracle.connect(accounts[0]).getPrice(wBTC_ADDRESS, USDT_ADDRESS);
+  console.log("BTC/ USDT Price: ", String(btcusdtprice)/10**18 );
+
+  const ethbtcprice = await priceOracle.connect(accounts[0]).getPrice( wETH_ADDRESS, wBTC_ADDRESS);
+  console.log("ETH / BTC Price: ", String(ethbtcprice)/10**18 )
+
 
 
 
@@ -150,12 +293,23 @@ main().catch((error) => {
 //1. Deploy Controller(feeRecipient)
 
 // 1.1 Prepare components - wBTC, wETH, LINK
-// 1.2 Deploy Modules - BIM, 
+// 1.2 Deploy Modules - BIM
 //2. Deploy SetToken(components[], units[], modules[], controller, manager, name, symbol)
 
+
+// NAV ISSUE MODULE
+// SetValuer
+// Oracle
+// Integration Registry
+// Trade Module
+// Custom NAV ISSUE MODULE
 // 2.1 address masterQuoteAsset
 // 2.2 Adapters
 // 2.3 Oracles
 //3. Deploy Oracle(controller, masterQuoteAsset, adapters[], assetOnes[], AssetTwos[], oracles[])
 //4. Deploy Integration Registry(controller)
 //5. Deply SetValuer (controller)
+
+
+// DEPLOYING WITH GENERAL INDEX MODULE
+// 

@@ -17,18 +17,20 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200000
+        runs: 20000
       }
     }
   },
   defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
-      //forking bsc testnet 
+      //forking matic testnet 
       forking: {
         enabled: true,
-        url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
-        chainId: 97,
+        url: "https://polygon-rpc.com",
+        // blockNumber: 56802667,
+        // url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
+        chainId: 97
       },
     },
     bscTestnet: {
@@ -50,6 +52,9 @@ module.exports = {
     goerli:{
       url: 'https://ethereum-goerli.publicnode.com',
       // accounts: [process.env.PRIVATE_KEY1, process.env.PRIVATE_KEY7, process.env.PRIVATE_KEY8 ]
+    },
+    polygon: {
+      url: 'https://polygon-rpc.com',
     },
     mumbai: {
       url: 'https://rpc-mumbai.maticvigil.com',

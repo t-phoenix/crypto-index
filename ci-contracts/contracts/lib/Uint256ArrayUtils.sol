@@ -15,18 +15,33 @@
 
     SPDX-License-Identifier: Apache License, Version 2.0
 */
+
 pragma solidity 0.6.10;
 
 /**
- * @title IOracle
+ * @title Uint256ArrayUtils
  * @author Set Protocol
  *
- * Interface for operating with any external Oracle that returns uint256 or
- * an adapting contract that converts oracle output to uint256
+ * Utility functions to handle Uint256 Arrays
  */
-interface IOracle {
+library Uint256ArrayUtils {
+
     /**
-     * @return  Current price of asset represented in uint256, typically a preciseUnit where 10^18 = 1.
+     * Returns the combination of the two arrays
+     * @param A The first array
+     * @param B The second array
+     * @return Returns A extended by B
      */
-    function latestRoundData() external view returns (uint256);
+    function extend(uint256[] memory A, uint256[] memory B) internal pure returns (uint256[] memory) {
+        uint256 aLength = A.length;
+        uint256 bLength = B.length;
+        uint256[] memory newUints = new uint256[](aLength + bLength);
+        for (uint256 i = 0; i < aLength; i++) {
+            newUints[i] = A[i];
+        }
+        for (uint256 j = 0; j < bLength; j++) {
+            newUints[aLength + j] = B[j];
+        }
+        return newUints;
+    }
 }
