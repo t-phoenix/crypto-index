@@ -288,7 +288,8 @@ contract PriceOracle is Ownable {
 
         // Check asset1 -> asset 2. If exists, then return value
         if (hasDirectOracle) {
-            return (true, directOracle.latestRoundData());
+            IOracle.RoundData memory result = directOracle.latestRoundData();
+            return (true, uint256(result.answer));
         }
 
         IOracle inverseOracle = oracles[_assetTwo][_assetOne];
@@ -366,8 +367,12 @@ contract PriceOracle is Ownable {
     function _calculateInversePrice(
         IOracle _inverseOracle
     ) internal view returns (uint256) {
-        uint256 inverseValue = _inverseOracle.latestRoundData();
+        IOracle.RoundData memory inverseValue = _inverseOracle
+            .latestRoundData();
 
-        return PreciseUnitMath.preciseUnit().preciseDiv(inverseValue);
+        return
+            PreciseUnitMath.preciseUnit().preciseDiv(
+                uint256(inverseValue.answer)
+            );
     }
 }

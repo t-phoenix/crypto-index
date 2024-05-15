@@ -42,6 +42,8 @@
 
 const hre = require("hardhat");
 // const v3InterfaceABI = require('./v3InterfaceABI');
+const {time, mine} = require('@nomicfoundation/hardhat-network-helpers');
+
 
 const aggregatorV3InterfaceABI = [
   {
@@ -92,6 +94,7 @@ const aggregatorV3InterfaceABI = [
     type: "function",
   },
 ]
+
 
 
 async function main() {
@@ -246,10 +249,12 @@ async function main() {
   // USDT/ USD - 0x0A6513e40db6EB1b165753AD52E80663aeA50545
 
 
+
+  //Getting BTC Price directly from Chainlink Oracles
   const v3Contract = await hre.ethers.getContractAt(aggregatorV3InterfaceABI, '0xc907E116054Ad103354f2D350FD2514433D57F6f');
-  console.log("V3 Contract: ", v3Contract);
+  // console.log("V3 Contract: ", v3Contract);
   const btcusdPrice = await v3Contract.latestRoundData();
-  console.log("BTC USD Price: ", btcusdPrice)
+  // console.log("BTC USD Price: ", btcusdPrice)
 
 
 
@@ -265,14 +270,152 @@ async function main() {
 
 
   const ethusdtprice = await priceOracle.connect(accounts[0]).getPrice(wETH_ADDRESS,USDT_ADDRESS);
-  console.log("ETH/ USDT Price: ", String(ethusdtprice)/10**18 );
+  console.log("ETH/ USDT Price: ", String(ethusdtprice)/10**8 );
 
   const btcusdtprice = await priceOracle.connect(accounts[0]).getPrice(wBTC_ADDRESS, USDT_ADDRESS);
-  console.log("BTC/ USDT Price: ", String(btcusdtprice)/10**18 );
+  console.log("BTC/ USDT Price: ", String(btcusdtprice)/10**8 );
 
-  const ethbtcprice = await priceOracle.connect(accounts[0]).getPrice( wETH_ADDRESS, wBTC_ADDRESS);
+  const ethbtcprice = await priceOracle.connect(accounts[0]).getPrice( wBTC_ADDRESS, wETH_ADDRESS);
   console.log("ETH / BTC Price: ", String(ethbtcprice)/10**18 )
 
+
+  // DEPLOY SET VALUER
+  const setValuer = await ethers.deployContract("SetValuer", [controller.target]);
+  
+  await controller.addModule(setValuer.target);
+  
+  const checkSystemContract = await controller.isSystemContract(setValuer.target);
+  console.log("Check if Set Valuer is system contract: ", checkSystemContract );
+
+
+  const setValuation  = await setValuer.calculateSetTokenValuation(blueChip.target, USDT_ADDRESS);
+
+  console.log("Please Get Set token Valuation 🙏: ", String(setValuation)/10**8);
+
+
+  // Checking Valuation
+  // console.log("BLUE Balance| wBTC:", String(BLUEwBTCbalance)/10**8, ' wETH: ', String(BLUEwETHbalance)/10**18);
+
+  const btcValuation =  (Number(BLUEwBTCbalance)/10**8) * (Number(btcusdtprice)/10**8)
+  const ethValuation = (Number(BLUEwETHbalance)/10**18) * (Number(ethusdtprice)/10**8)
+  const blueValuation = (btcValuation + ethValuation)/(Number(newTokenSupply)/10**18);
+
+  console.log("Calculated BLUE Valuation: ", blueValuation)
+
+
+
+  // Deploy NAV Issuance Module
+  
+
+  const NAVModule = await ethers.deployContract("CustomOracleNavIssuanceModule", [controller.target, wETH_ADDRESS])
+
+  await controller.addModule(NAVModule.target);
+  await blueChip.connect(owner).addModule(NAVModule.target);
+
+  // initialize NAV Module
+  // * @param _setToken                     Instance of the SetToken to issue
+  // * @param _navIssuanceSettings          NAVIssuanceSettings struct defining parameters
+  //   struct NAVIssuanceSettings {
+  //     INAVIssuanceHook managerIssuanceHook;          // Issuance hook configurations
+  //     INAVIssuanceHook managerRedemptionHook;        // Redemption hook configurations
+  //     ISetValuer setValuer;                          // Optional custom set valuer. If address(0) is provided, fetch the default one from the controller
+  //     address[] reserveAssets;                       // Allowed reserve assets - Must have a price enabled with the price oracle
+  //     address feeRecipient;                          // Manager fee recipient
+  //     uint256[2] managerFees;                        // Manager fees. 0 index is issue and 1 index is redeem fee (0.01% = 1e14, 1% = 1e16)
+  //     uint256 maxManagerFee;                         // Maximum fee manager is allowed to set for issue and redeem
+  //     uint256 premiumPercentage;                     // Premium percentage (0.01% = 1e14, 1% = 1e16). This premium is a buffer around oracle
+  //                                                    // prices paid by user to the SetToken, which prevents arbitrage and oracle front running
+  //     uint256 maxPremiumPercentage;                  // Maximum premium percentage manager is allowed to set (configured by manager)
+  //     uint256 minSetTokenSupply;                     // Minimum SetToken supply required for issuance and redemption
+  //                                                    // to prevent dramatic inflationary changes to the SetToken's position multiplier
+  // }
+
+  // CAIUTION: DOES NOT WORK WELL WITH FEE ENABLED
+  // THROW REVERT: "Invalid post transfer balance"
+
+  let navIssuanceSettings = {
+    managerIssuanceHook: '0x0000000000000000000000000000000000000000',
+    managerRedemptionHook: '0x0000000000000000000000000000000000000000',
+    setValuer: setValuer.target,
+    reserveAssets: [USDT_ADDRESS, wETH_ADDRESS, wBTC_ADDRESS],
+    feeRecipient: accounts[0],
+    managerFees: [0, 0],
+    maxManagerFee: 500000000000000n,
+    premiumPercentage: 0,
+    maxPremiumPercentage: 500000000000000n,
+    minSetTokenSupply: 10000000000000000n
+  }
+
+  console.log("transaction initiated ... ")
+  await NAVModule.connect(owner).initialize(blueChip.target, navIssuanceSettings)
+
+  console.log("Yay! This Transaction is Succesfull.")
+
+  // await time.increase(600);
+  // await mine(10)
+
+
+  const checkSystemContractNAV = await controller.isSystemContract(NAVModule.target);
+  console.log("Check if NAV Module is system contract: ", checkSystemContractNAV );
+
+  /** 
+  * Deposits the allowed reserve asset into the SetToken and mints the appropriate % of Net Asset Value of the SetToken
+  * to the specified _to address.
+  * function issue(
+  * @param ISetToken _setToken                     Instance of the SetToken contract
+  * @param address _reserveAsset                 Address of the reserve asset to issue with
+  * @param uint256 _reserveAssetQuantity         Quantity of the reserve asset to issue with
+  * @param uint256 _minSetTokenReceiveQuantity   Min quantity of SetToken to receive after issuance
+  * @param address _to                           Address to mint SetToken to
+  */
+
+// for (let index = 0; index < accounts.length; index++) {
+  const currentBTCBalance =  await wBTC.balanceOf(accounts[0]);
+  console.log("WBTC Balance for Owner:", String(currentBTCBalance)/10**8 );
+  await wBTC.connect(accounts[0]).approve(NAVModule.target, 500000000n); // 5BTC
+  // await wBTC.connect(accounts[index]).approve(basicIssueModule.target, 900000000n); 
+
+
+
+  // Check Issuance is valid using: isIssueValid and getExpectedSetTokenIssueQuantity
+
+  const boolResult = await NAVModule.isIssueValid(blueChip.target, wBTC_ADDRESS, 100000000n);
+  console.log("Is it valid to buy Blue Chip with  wBTC: ", boolResult);
+
+  const expectedIssuance = await NAVModule.getExpectedSetTokenIssueQuantity(blueChip.target, wBTC_ADDRESS, 100000000n);
+  console.log("Expected output of BLUE Tokens for 3 wBTC: ", String(expectedIssuance)/10**18);
+
+  const beforeNAVTokenSupply = await blueChip.totalSupply();
+  console.log("DID NAV Module incresed Token Supply:", String(beforeNAVTokenSupply)/10**18);
+
+
+  const NAVIssuingResult = await NAVModule.connect(accounts[0]).issue(blueChip.target, wBTC_ADDRESS, 100000000n, 428454815234929n, accounts[0].address ) // Mint for 3 BTC 
+  console.log("NAV Issue Result: ", NAVIssuingResult);
+
+  const afterNAVTokenSupply = await blueChip.totalSupply();
+  console.log("DID NAV Module incresed Token Supply:", String(afterNAVTokenSupply)/10**18);
+
+
+
+  // Deploy Integration Registry
+
+  const integrationRegistry = await ethers.deployContract("IntegrationRegistry", [controller.target]);
+
+  await controller.addResource(integrationRegistry.target, 2);
+
+  const checkSystemContractIR = await controller.isSystemContract(integrationRegistry.target);
+  console.log("Check if Integration Registry is system contract: ", checkSystemContractIR );
+
+  // Check Updated token supply
+ 
+
+
+
+  // function addIntegration(
+  //   address _module,
+  //   string memory _name,
+  //   address _adapter
+  // }
 
 
 

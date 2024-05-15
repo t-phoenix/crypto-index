@@ -16,6 +16,7 @@
     SPDX-License-Identifier: Apache License, Version 2.0
 */
 pragma solidity 0.6.10;
+pragma experimental "ABIEncoderV2";
 
 /**
  * @title IOracle
@@ -25,8 +26,16 @@ pragma solidity 0.6.10;
  * an adapting contract that converts oracle output to uint256
  */
 interface IOracle {
+    struct RoundData {
+        uint80 roundID;
+        int answer;
+        uint startedAt;
+        uint timeStamp;
+        uint80 answeredInRound;
+    }
+
     /**
      * @return  Current price of asset represented in uint256, typically a preciseUnit where 10^18 = 1.
      */
-    function latestRoundData() external view returns (uint256);
+    function latestRoundData() external view returns (RoundData memory);
 }
