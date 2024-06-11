@@ -41,10 +41,14 @@
 
 
 const hre = require("hardhat");
+// import { hexlify, hexZeroPad } from "ethers/lib/utils";
+const {toBeHex, zeroPadValue} = require('ethers')
 // const v3InterfaceABI = require('./v3InterfaceABI');
 const {time, mine} = require('@nomicfoundation/hardhat-network-helpers');
+var BigNumber = require('bignumber.js');
 
 
+// INTERFCE FOR PRICE ORACLE
 const aggregatorV3InterfaceABI = [
   {
     inputs: [],
@@ -98,13 +102,15 @@ const aggregatorV3InterfaceABI = [
 
 
 async function main() {
-  //----------------------------------------------//
-  // PHASE 1
-  //----------------------------------------------//
+
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 1: Impersonate Addresses and setup ERC20 contract instances
+  //--------------------------------------------------------------------------------------------//
+
   // mint 1 million wETH/ wBTC 
   const INITIAL_SUPPLY = 1000000;
 
-  // Impoersonate high networth wallets
+  // Impersonate high networth wallets
   let accounts = [];
   accounts[0] = await ethers.getImpersonatedSigner("0x0AFF6665bB45bF349489B20E225A6c5D78E2280F");
   accounts[1] = await ethers.getImpersonatedSigner("0x1680eD6A1fE73c673E778705355212235DeC3242");
@@ -143,24 +149,24 @@ async function main() {
   }
   
 
-  //----------------------------------------------//
-  // PHASE 2
-  //----------------------------------------------//
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 2: Deploy Base System Contracts: Controller, setToken, BasicIssue Module
+  //--------------------------------------------------------------------------------------------//
 
   // Deploy Controller
-  const controller = await ethers.deployContract("Controller", [owner]);
+  const controller = await ethers.deployContract("Controller", [owner], owner);
   console.log("Controller Contract:", controller.target)
 
 
   // Deploy BIM Module
-  const basicIssueModule = await ethers.deployContract("BasicIssuanceModule", [controller.target]);  
+  const basicIssueModule = await ethers.deployContract("BasicIssuanceModule", [controller.target], owner);  
   console.log("Basic Issue Module Contract:", basicIssueModule.target)  
   
   // initialize controller
-  await controller.initialize([owner], [basicIssueModule.target], [], [] );
+  await controller.connect(owner).initialize([owner], [basicIssueModule.target], [], [] );
 
   // Deploy Set Token (Blue Chip - wETH, wBTC)
-  const blueChip = await ethers.deployContract("SetToken", [[wETH_ADDRESS, wBTC_ADDRESS], [5000000000000000000n, 200000000n], [basicIssueModule.target], controller.target ,owner, "BLUE CHIP", "BLUE"]);
+  const blueChip = await ethers.deployContract("SetToken", [[wETH_ADDRESS, wBTC_ADDRESS], [5000000000000000000n, 200000000n], [basicIssueModule.target], controller.target ,owner, "BLUE CHIP", "BLUE"], owner);
   console.log("Blue Chip Token Contract:", blueChip.target)
 
 
@@ -195,9 +201,9 @@ async function main() {
   console.log("POSITIONS: ", positions);
 
 
-  //----------------------------------------------//
-  // PHASE 3
-  //----------------------------------------------//
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 3: Issue BLUE CHIP set token using BIM module
+  //--------------------------------------------------------------------------------------------//
 
 
   // Issue BLUE CHIP tokens
@@ -231,15 +237,9 @@ async function main() {
   console.log("BLUE Balance| wBTC:", String(BLUEwBTCbalance)/10**8, ' wETH: ', String(BLUEwETHbalance)/10**18);
 
 
-  //----------------------------------------------//
-  // PHASE 4
-  //----------------------------------------------//
-  // Controller
-  // masterQuoteAsset - address of asset that can be used to link unrelated asset prices
-  // Adapters - used to price assets created by other protocols
-  // assetOnes - list of first asset in pair
-  // assetTwos - list of second asset in pair
-  // Oracles - list of oracles
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 4: Deploy Price Oracle Contract 
+  //--------------------------------------------------------------------------------------------//
   
   // BTC/USD - 0xc907E116054Ad103354f2D350FD2514433D57F6f
   // ETH/USD - 0xF9680D99D6C9589e2a93a78A04A279e509205945
@@ -249,26 +249,27 @@ async function main() {
   // USDT/ USD - 0x0A6513e40db6EB1b165753AD52E80663aeA50545
 
 
-
   //Getting BTC Price directly from Chainlink Oracles
   const v3Contract = await hre.ethers.getContractAt(aggregatorV3InterfaceABI, '0xc907E116054Ad103354f2D350FD2514433D57F6f');
-  // console.log("V3 Contract: ", v3Contract);
   const btcusdPrice = await v3Contract.latestRoundData();
-  // console.log("BTC USD Price: ", btcusdPrice)
+  console.log("BTC USD Price: ", btcusdPrice)
 
 
-
-
-  const priceOracle = await ethers.deployContract("PriceOracle", [controller.target, USDT_ADDRESS, [], [wBTC_ADDRESS, wETH_ADDRESS], [USDT_ADDRESS, USDT_ADDRESS],   ['0xc907E116054Ad103354f2D350FD2514433D57F6f', '0xF9680D99D6C9589e2a93a78A04A279e509205945'] ])
+  // Deploy Price Oracle
+  // Controller
+  // masterQuoteAsset - address of asset that can be used to link unrelated asset prices
+  // Adapters - used to price assets created by other protocols
+  // assetOnes - list of first asset in pair
+  // assetTwos - list of second asset in pair
+  // Oracles - list of oracles
+  const priceOracle = await ethers.deployContract("PriceOracle", [controller.target, USDT_ADDRESS, [], [wBTC_ADDRESS, wETH_ADDRESS], [USDT_ADDRESS, USDT_ADDRESS],   ['0xc907E116054Ad103354f2D350FD2514433D57F6f', '0xF9680D99D6C9589e2a93a78A04A279e509205945'] ], owner)
   console.log("Price Oracle: ", priceOracle.target);
 
-  // must connect to controller for {controller.isSystemContract(msg.sender)}
-  controller.addResource(priceOracle.target, 1);
-
-  // const checkSystemContract = await controller.isSystemContract(accounts[0]);
-  // console.log("Check if accounts[0] is system contract: ", checkSystemContract );
+  // Adding price Oracle to controller as Resource
+  controller.connect(owner).addResource(priceOracle.target, 1);
 
 
+  //Get Price for ETH/ USDT, BTC/ USDT, ETH/ BTC.
   const ethusdtprice = await priceOracle.connect(accounts[0]).getPrice(wETH_ADDRESS,USDT_ADDRESS);
   console.log("ETH/ USDT Price: ", String(ethusdtprice)/10**8 );
 
@@ -279,37 +280,46 @@ async function main() {
   console.log("ETH / BTC Price: ", String(ethbtcprice)/10**18 )
 
 
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 5: Deploy Set Valuer to value BLUE CHIP based on holdings
+  //--------------------------------------------------------------------------------------------//
+
   // DEPLOY SET VALUER
   const setValuer = await ethers.deployContract("SetValuer", [controller.target]);
   
-  await controller.addModule(setValuer.target);
+  // Adding set Valuer to controller as module
+  // SET VALUER MUST BE RESOURCE WITH ID - 2
+  await controller.connect(owner).addResource(setValuer.target, 2);
+  
   
   const checkSystemContract = await controller.isSystemContract(setValuer.target);
   console.log("Check if Set Valuer is system contract: ", checkSystemContract );
 
 
+  // Fetch Valuation of Set Token (BLUE CHIP) in USDT
   const setValuation  = await setValuer.calculateSetTokenValuation(blueChip.target, USDT_ADDRESS);
-
   console.log("Please Get Set token Valuation 🙏: ", String(setValuation)/10**8);
 
 
-  // Checking Valuation
+  // Calculating Valuation Manually
   // console.log("BLUE Balance| wBTC:", String(BLUEwBTCbalance)/10**8, ' wETH: ', String(BLUEwETHbalance)/10**18);
 
   const btcValuation =  (Number(BLUEwBTCbalance)/10**8) * (Number(btcusdtprice)/10**8)
   const ethValuation = (Number(BLUEwETHbalance)/10**18) * (Number(ethusdtprice)/10**8)
   const blueValuation = (btcValuation + ethValuation)/(Number(newTokenSupply)/10**18);
-
   console.log("Calculated BLUE Valuation: ", blueValuation)
 
 
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 6: Deploy Net Asset Value Issuance Module
+  //--------------------------------------------------------------------------------------------//
 
   // Deploy NAV Issuance Module
-  
-
   const NAVModule = await ethers.deployContract("CustomOracleNavIssuanceModule", [controller.target, wETH_ADDRESS])
 
-  await controller.addModule(NAVModule.target);
+  // Add NAV to Controller as module
+  await controller.connect(owner).addModule(NAVModule.target);
+  // Add NAV to SetToken as module
   await blueChip.connect(owner).addModule(NAVModule.target);
 
   // initialize NAV Module
@@ -330,7 +340,7 @@ async function main() {
   //                                                    // to prevent dramatic inflationary changes to the SetToken's position multiplier
   // }
 
-  // CAIUTION: DOES NOT WORK WELL WITH FEE ENABLED
+  // CAIUTION: DOES NOT WORK WELL WITH MANAGER FEE ENABLED
   // THROW REVERT: "Invalid post transfer balance"
 
   let navIssuanceSettings = {
@@ -341,22 +351,44 @@ async function main() {
     feeRecipient: accounts[0],
     managerFees: [0, 0],
     maxManagerFee: 500000000000000n,
-    premiumPercentage: 0,
+    premiumPercentage: 100000000000000n,
     maxPremiumPercentage: 500000000000000n,
     minSetTokenSupply: 10000000000000000n
   }
 
+  // INITIALIZE NAV Module with NAV ISSUEANCE SETTINGS
   console.log("transaction initiated ... ")
   await NAVModule.connect(owner).initialize(blueChip.target, navIssuanceSettings)
 
-  console.log("Yay! This Transaction is Succesfull.")
-
-  // await time.increase(600);
-  // await mine(10)
-
-
+  // Checking if NAV module is system contract
   const checkSystemContractNAV = await controller.isSystemContract(NAVModule.target);
   console.log("Check if NAV Module is system contract: ", checkSystemContractNAV );
+
+
+  //--------------------------------------------------------------------------------------------//
+  // PHASE 7: Issue BLUE CHIP set token using NAV module
+  //-------------------------------------------------------------------------------------------//
+
+  // Checking BTC balance for owner
+  const currentBTCBalance =  await wBTC.balanceOf(accounts[0]);
+  console.log("WBTC Balance for Owner:", String(currentBTCBalance)/10**8 );
+
+  // Approve BTC balance to NAV module for user
+  await wBTC.connect(owner).approve(NAVModule.target, 2500000000n); // 5BTC
+  await wETH.connect(owner).approve(NAVModule.target, 20000000000000000000n); //20 WETH
+
+
+  // Check Issuance is valid using: isIssueValid and getExpectedSetTokenIssueQuantity
+  const boolResult = await NAVModule.isIssueValid(blueChip.target, wBTC_ADDRESS, 100000000n);
+  console.log("Is it valid to buy Blue Chip with  wBTC: ", boolResult);
+
+  // Check Issuance is valid using: getExpectedSetTokenIssueQuantity
+  const expectedIssuance = await NAVModule.getExpectedSetTokenIssueQuantity(blueChip.target, wBTC_ADDRESS, 1000000000n);
+  console.log("Expected output of BLUE Tokens for 10 wBTC: ", String(expectedIssuance)/10**18);
+
+  // Checking BLUE CHIP BALANCE before minting new tokens
+  const beforeNAVTokenSupply = await blueChip.totalSupply();
+  console.log("DID NAV Module incresed Token Supply:", String(beforeNAVTokenSupply)/10**18);
 
   /** 
   * Deposits the allowed reserve asset into the SetToken and mints the appropriate % of Net Asset Value of the SetToken
@@ -369,54 +401,200 @@ async function main() {
   * @param address _to                           Address to mint SetToken to
   */
 
-// for (let index = 0; index < accounts.length; index++) {
-  const currentBTCBalance =  await wBTC.balanceOf(accounts[0]);
-  console.log("WBTC Balance for Owner:", String(currentBTCBalance)/10**8 );
-  await wBTC.connect(accounts[0]).approve(NAVModule.target, 500000000n); // 5BTC
-  // await wBTC.connect(accounts[index]).approve(basicIssueModule.target, 900000000n); 
+  // Issue Set Token using NAV MODULE
+  await NAVModule.connect(accounts[0]).issue(blueChip.target, wBTC_ADDRESS, 1000000000n, 4284548152349290n, accounts[0].address ) // Mint for 3 BTC 
 
-
-
-  // Check Issuance is valid using: isIssueValid and getExpectedSetTokenIssueQuantity
-
-  const boolResult = await NAVModule.isIssueValid(blueChip.target, wBTC_ADDRESS, 100000000n);
-  console.log("Is it valid to buy Blue Chip with  wBTC: ", boolResult);
-
-  const expectedIssuance = await NAVModule.getExpectedSetTokenIssueQuantity(blueChip.target, wBTC_ADDRESS, 100000000n);
-  console.log("Expected output of BLUE Tokens for 3 wBTC: ", String(expectedIssuance)/10**18);
-
-  const beforeNAVTokenSupply = await blueChip.totalSupply();
-  console.log("DID NAV Module incresed Token Supply:", String(beforeNAVTokenSupply)/10**18);
-
-
-  const NAVIssuingResult = await NAVModule.connect(accounts[0]).issue(blueChip.target, wBTC_ADDRESS, 100000000n, 428454815234929n, accounts[0].address ) // Mint for 3 BTC 
-  console.log("NAV Issue Result: ", NAVIssuingResult);
-
+  // Checking BLUE CHIP BALANCE after minting new tokens
   const afterNAVTokenSupply = await blueChip.totalSupply();
   console.log("DID NAV Module incresed Token Supply:", String(afterNAVTokenSupply)/10**18);
 
 
+  // Checking Set Token Balance of ETH and BTC
+  const newBTCbalance = await wBTC.balanceOf(blueChip.target);
+  const newETHbalance =  await wETH.balanceOf(blueChip.target);
+  console.log("BLUE Balance| wBTC:", String(newBTCbalance)/10**8, ' wETH: ', String(newETHbalance)/10**18);
+
+
+
+  //----------------------------------------------//
+  // PHASE 8: Deploy Integration Registry
+  //----------------------------------------------//
+
 
   // Deploy Integration Registry
+  const integrationRegistry = await hre.ethers.deployContract("IntegrationRegistry", [controller.target], owner);
 
-  const integrationRegistry = await ethers.deployContract("IntegrationRegistry", [controller.target]);
+  // Add Integration Registry to Controller
+  await controller.connect(owner).addResource(integrationRegistry.target, 0);
 
-  await controller.addResource(integrationRegistry.target, 2);
-
+  // Check if IR is System Contract
   const checkSystemContractIR = await controller.isSystemContract(integrationRegistry.target);
   console.log("Check if Integration Registry is system contract: ", checkSystemContractIR );
 
-  // Check Updated token supply
- 
+
+  // Deploy General Index Module
+  const generalIndex = await ethers.deployContract("GeneralIndexModule", [controller.target, wETH_ADDRESS], owner);
+  
+  // Add module to Controller
+  await controller.connect(owner).addModule(generalIndex.target);
+  // Add module to Set Token
+  await blueChip.connect(owner).addModule(generalIndex.target);
+
+  // Initialize Module
+  await generalIndex.connect(owner).initialize(blueChip.target);
+  const indexModuleState = await blueChip.isInitializedModule(generalIndex.target);
+
+  console.log("General Index Module Initialised : ", indexModuleState);
+
+  // Check if GIM is system contract
+  const checkSystemContractGIM = await controller.isSystemContract(generalIndex.target);
+  console.log("Check if General Index Module is system contract: ", checkSystemContractGIM );
 
 
 
-  // function addIntegration(
-  //   address _module,
-  //   string memory _name,
-  //   address _adapter
-  // }
+  //----------------------------------------------//
+  // PHASE 9
+  //----------------------------------------------//
+  // SET GIM Parameters
+  // params: max Trade Size, coolOffPeriod, exchange to trade
+  console.log("Allowed Traders Original: ",await generalIndex.connect(owner).getAllowedTraders(blueChip.target));
+  await generalIndex.connect(owner).setAnyoneTrade(blueChip.target, true);
+  console.log("Allowed Traders Now: ",await generalIndex.connect(owner).getAllowedTraders(blueChip.target));
 
+
+  // Config Trade Maximums for Components
+  // @params: setToken, components, maximums
+  await generalIndex.connect(owner).setTradeMaximums(blueChip.target, [wETH_ADDRESS, wBTC_ADDRESS], [130000000000000000000n, 700000000n]) //12 ETH, 7 BTC
+  // 126713633106296360000n
+  // 130000000000000000000n
+  // Config Cool Off Period
+  // @params: set, components[], uint256[] cooloffperiod
+  await generalIndex.connect(owner).setCoolOffPeriods(blueChip.target, [wETH_ADDRESS, wBTC_ADDRESS], [10, 10])
+
+
+  // Adapter List
+  // https://docs.indexcoop.com/index-coop-community-handbook/protocol/index-protocol#adapters
+  // 0x2b235Ab7f53c150A2bB26ee7c291b5A542da62dC - ZeroExApiAdapter
+  // 0xE592427A0AEce92De3Edee1F18E0157C05861564 - UniswapV3SwapRouter
+  // 0x11111112542D85B3EF69AE05771c2dCCff4fAa26 - AggregationRouter1inchV3
+
+
+  // Deploy Exchange Adapters
+  const uniswapV3IndexExchangeAdapter =  await hre.ethers.deployContract("UniswapV3IndexExchangeAdapter", ['0xE592427A0AEce92De3Edee1F18E0157C05861564'], owner);
+  const router = await uniswapV3IndexExchangeAdapter.getSpender();
+  console.log("Uniswap Router Spender: ", router);
+
+
+  // Add Adaptors for trading in IR - single integration
+  // module, name, adapter
+  // await integrationRegistry.connect(owner).addIntegration(generalIndex.target, "ZeroExApiAdapter", '0x2b235Ab7f53c150A2bB26ee7c291b5A542da62dC' );
+  await integrationRegistry.connect(owner).addIntegration(generalIndex.target, "UniswapV3SwapRouter", uniswapV3IndexExchangeAdapter);
+
+
+  // Getting Integration Registry
+  // const zeroExAdapter = await integrationRegistry.connect(owner).getIntegrationAdapter(generalIndex.target, "ZeroExApiAdapter");
+  // console.log("Retrieved Zero Ex Adapter: ", zeroExAdapter);
+  const uniswapAdapter = await integrationRegistry.connect(owner).getIntegrationAdapter(generalIndex.target, "UniswapV3SwapRouter");
+  console.log("Retrieved Uniswap Adapter: ", uniswapAdapter);
+
+
+
+  // Config Exchanges
+  // @params: setToken, components[], exchangeNames[]
+  await generalIndex.connect(owner).setExchanges(blueChip.target, [wBTC_ADDRESS, wETH_ADDRESS], ["UniswapV3SwapRouter", "UniswapV3SwapRouter"])
+  // @params: setToken, compoenents[],bytes[] exchangeData
+  const uniBytes = "0x";
+  const wbtcBytes = "0x7890";
+  const uniswapData = zeroPadValue(toBeHex(3000), 3)
+  await generalIndex.connect(owner).setExchangeData(blueChip.target, [wBTC_ADDRESS, wETH_ADDRESS], [uniswapData, uniswapData])
+
+  const newMultiplier = await blueChip.positionMultiplier();
+  console.log("POSITION MULTIPLIER: ", newMultiplier);
+  //startRebalance ( setToken, address[] newComponents, unit256[] _newComponentTargetUnits, unit256[] oldComponentTargetUnits, unit256 positionMultipiler)
+  await generalIndex.connect(owner).startRebalance(blueChip.target, [], [], [ 5000000000000000000n, 200000000n ], newMultiplier  ) //4 ETH, 3 BTC
+  console.log("Target Balance Units==> wETH: 4.000000000000000000, wBTC: 3.00000000 ", )
+  // // getRebalanceComponents (set) --> Array of _setToken components involved in rebalance
+  // const rebalanceComponents = await generalIndex.connect(owner).getRebalanceComponents(blueChip.target);
+  // console.log('Rebalancing Comonents: ', rebalanceComponents)
+  
+  // getComponentTradeQuantityAndDirection (set, one component) --> (isSendTokenFixed, componentQuantity)
+  const ethDirection = await generalIndex.connect(owner).getComponentTradeQuantityAndDirection(blueChip.target, wETH_ADDRESS)
+  console.log("ETH Direction: ",ethDirection[0], Number(ethDirection[1])/10**18 );
+
+  const btcDirection = await generalIndex.connect(owner).getComponentTradeQuantityAndDirection(blueChip.target, wBTC_ADDRESS)
+  console.log("BTC Direction: ",btcDirection[0], Number(btcDirection[1])/10**8 );
+  
+
+  // NEW COMPONENTS
+  for(const component of components){
+    const defaultPos = await blueChip.getDefaultPositionRealUnit(component);
+    const realUnit = await blueChip.getTotalComponentRealUnits(component);
+    if(component === wETH_ADDRESS){
+      console.log("component: ", component, " Default position: ", Number(defaultPos)/10**18, " total comp real unit: ", Number(realUnit)/10**18); 
+    } else if (component === wBTC_ADDRESS){
+      console.log("component: ", component, " Default position: ", Number(defaultPos)/10**8, " total comp real unit: ", Number(realUnit)/10**8); 
+    }
+  }
+
+  // Check BLUE Token Contract Balance
+  const beforeBLUEwBTCbalance = await wBTC.balanceOf(blueChip.target);
+  const beforeBLUEwETHbalance =  await wETH.balanceOf(blueChip.target);
+  console.log("BLUE Balance| wBTC:", String(beforeBLUEwBTCbalance)/10**8, ' wETH: ', String(beforeBLUEwETHbalance)/10**18);
+
+
+  const isOwnerAllowedTrader = await generalIndex.getIsAllowedTrader(blueChip.target, owner.address);
+  console.log("Owner is allowed Trader ? ", isOwnerAllowedTrader);
+
+  const isAccount1AllowedTrader = await generalIndex.getIsAllowedTrader(blueChip.target, accounts[1].address);
+  console.log("Account 1 is Allowed Trader ? ", isAccount1AllowedTrader);
+
+  // Trading ASSETS TO REBALANCE
+  // Allowance (owner, spender)
+  // const btcAllowance = await wBTC.allowance(blueChip.target, generalIndex.target);
+  // await wBTC.increaseAllowance()
+  // const ethAllowance = await wETH.allowance(blueChip.target, generalIndex.target);
+
+  // console.log("Allowance for BTC: ", btcAllowance, ", ETH: ", ethAllowance); 
+  const estimnateETHRecieve = Number(btcDirection[1])/10**8 * Number(ethbtcprice)/10**18
+  console.log("Estinate ETH to recieve: ", estimnateETHRecieve*10**18);
+
+  
+  const executionInfoETH = await generalIndex.executionInfo(blueChip.target, wETH_ADDRESS);
+  const executionInfoBTC = await generalIndex.executionInfo(blueChip.target, wBTC_ADDRESS);
+  // @return params: executionInfo
+  // uint256 targetUnit; // Target unit of component for Set
+  // uint256 maxSize; // Max trade size in precise units
+  // uint256 coolOffPeriod; // Required time between trades for the asset
+  // uint256 lastTradeTimestamp; // Timestamp of last trade
+  // string exchangeName; // Name of exchange adapter
+  // bytes exchangeData; // Arbitrary data that can be used to encode exchange specific settings (fee tier) or features (multi-hop)
+  console.log("Execution Info: weth ", executionInfoETH, " wbtc: ", executionInfoBTC)
+
+
+  const rebalanceInfo = await generalIndex.rebalanceInfo(blueChip.target);
+  // @return params: rebalanceInfo
+  // uint256 positionMultiplier; // Position multiplier at the beginning of rebalance
+  // uint256 raiseTargetPercentage; // Amount to raise all unit targets by if allowed (in precise units)
+  // address[] rebalanceComponents; // Array of components involved in rebalance
+  console.log("Rebalance Info: ", rebalanceInfo);
+
+  const ZERO = new BigNumber(0)
+  // console.log("ZERO: ", ZERO)
+  const zero = "0x0000000000000000000000000000000000000000000000000000000000000000"
+  const maxuint256 = "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  // settoken, component, _ethQuantityLimit -> Max/min amount of ETH spent/received during trade
+  // await generalIndex.initialize(blueChip.target);
+  await generalIndex.connect(owner).trade(blueChip.target, wBTC_ADDRESS, zero) // Trading wBTC and expecting min amount of wETH to recieve
+  
+
+
+
+  // Check BLUE Token Contract Balance
+  const afterBLUEwBTCbalance = await wBTC.balanceOf(blueChip.target);
+  const afterBLUEwETHbalance =  await wETH.balanceOf(blueChip.target);
+  console.log("BLUE Balance| wBTC:", String(afterBLUEwBTCbalance)/10**8, ' wETH: ', String(afterBLUEwETHbalance)/10**18);
+
+  
 
 
 }
@@ -455,4 +633,12 @@ main().catch((error) => {
 
 
 // DEPLOYING WITH GENERAL INDEX MODULE
-// 
+// // IntegrationRegistry will always be resource ID 0 in the system
+// uint256 constant internal INTEGRATION_REGISTRY_RESOURCE_ID = 0;
+// // PriceOracle will always be resource ID 1 in the system
+// uint256 constant internal PRICE_ORACLE_RESOURCE_ID = 1;
+// // SetValuer resource will always be resource ID 2 in the system
+// uint256 constant internal SET_VALUER_RESOURCE_ID = 2;
+
+// 38.245+5.88 = 32.365
+// 16.298+7 =  23.298
