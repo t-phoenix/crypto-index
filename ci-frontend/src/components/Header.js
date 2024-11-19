@@ -27,23 +27,27 @@ export default function Header() {
   return (
     <div className="header">
       {isTab ? (
+        // FOR MOBILE AND TAB
         <div className="header-container">
           <div className="nav-burger" onClick={openNavBar}>
             {account.address && <IoMenu />}
           </div>
           <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
           {/* <img src={CiLogo} style={{width: '30px'}} alt="Crypto Index Logo"/> */}
-            <h2 className="title">CRYPTO INDEX</h2>
+            <h2 className="title">CRYPTO BASKET</h2>
             <p className="icon-title">by EquiLabs</p>
           </div>
         </div>
       ) : (
+        // FOR LAPTOP
         <div className="header-container">
+          <img src={CiLogo} style={{height: '48px'}} alt="logo" onClick={() => {navigate("/"); setShowMenu(false);}}/>
           <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
-            <h2 className="title">CRYPTO INDEX</h2>
+            <h2 className="title">RYPTO BASKET</h2>
             <p className="icon-title">by EquiLabs</p>
+
           </div>
-          {account.address && <Navbar setShow={setShowMenu}/>}
+          {<Navbar setShow={setShowMenu}/>}
         </div>
       )}
       {

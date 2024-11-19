@@ -1,6 +1,7 @@
 .main-animation-div {
   height: 90%;
-  margin-block: 8%;
+  margin-top: 2%;
+  margin-bottom: 4%;
   padding-inline: 2%;
 }
 
@@ -9,7 +10,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 10.2vh;
+  font-size: 8.2vh;
   width: 100%;
   margin-block: 0%;
   font-style: oblique;
@@ -20,26 +21,69 @@
 .main-static-text {
   width: 80%;
   color: var(--primary-color);
-  margin-right: 20%;
 }
 
 .main-animation-text {
-  height: 18vh;
+  height: auto;
   width: auto;
   color: var(--color-white);
   padding-inline: 22px;
   padding-block: 12px;
   border-radius: 10px;
-  box-shadow: 2px 4px 2px var(--primary-color);
-  margin-left: 20%;
+  font-size: 8.2vh;
+  text-shadow: 2px 2px 4px;
 }
 .main-animation-subtext {
   font-size: 18px;
   width: 40%;
-  margin-left: 40%;
   margin-top: 2%;
-  text-align: right;
+  text-align: center;
   line-height: 26px;
+  text-shadow: 0px 0px 0px;
+  color: var(--color-offwhite);
+}
+.button-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-block: 4%;
+}
+
+
+
+.carousel-container {
+  width: 60%;
+  margin-block: 4%;
+  margin-inline: 20%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  margin: 0 40px;
+  padding: 40px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-item Icon {
+  height: 50px; /* Adjust height to fit design */
+  width: auto;
+  object-fit: contain;
 }
 
 /* //For Tab like Devices */

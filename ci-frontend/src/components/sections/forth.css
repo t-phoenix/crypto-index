@@ -1,12 +1,41 @@
 .forth-section-box{
-    height: 80vh;
+    height: 100vh;
     margin-bottom: 20vh;
     padding-inline: 6%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+    /* border-width: 2px;
+    border-style: solid; */
   }
+
+.forth-info-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-block: 8%;
+}
+.forth-info-grid-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding-left: 6%;
+  padding-block: 4%;
+  border-radius: 12px;
+}
+.forth-icon-style{
+  color: var(--primary-color);
+  margin-right: 14px;
+  background-color:rgb(86, 85, 85);
+  box-shadow: 2px 2px 4px #b1b1b1 ;
+  padding: 4px;
+  border-radius: 12px;
+
+}
+
+
+
 
 .anim-container{
     width: 80%;

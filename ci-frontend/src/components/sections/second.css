@@ -1,6 +1,6 @@
 .second-section-box{
-  height: 80vh;
-  margin-bottom: 20vh;
+  height: 100vh;
+  margin-bottom: 0vh;
   padding-inline: 6%;
   display: flex;
   flex-direction: row;
@@ -17,6 +17,7 @@
     justify-content: start;
     margin-inline: 6%;
     z-index: 5;
+    padding-top: 4%;
 }
 
 .card-header{
@@ -27,9 +28,46 @@
 }
 
 .card-content{
-    margin-top: 10%;
-    font-size: 1.4em;
+  width: 80%;
+    margin-top: 2%;
+    font-size: 1em;
     text-align: start;
+}
+
+.info-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-block: 10%;
+}
+
+.info-grid-box{
+  background-color: var(--color-offblack);
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding-left: 6%;
+  padding-block: 8%;
+  border-radius: 12px;
+}
+.icon-style{
+  color: var(--primary-color);
+  margin-right: 8px;
+}
+
+.end-box{
+  margin-top: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.endbox-title{
+  color: var(--primary-color);
+  text-align: end;
+  margin-bottom: 8px;
 }
 
 @media all and (max-width: 600px) {
@@ -80,4 +118,5 @@
     fill: var(--secondary-color);
   }
 
+  
   

@@ -8,16 +8,21 @@ import {
   HERO_HEADING_INITIAL_OPACITY,
   HERO_HEADING_INITIAL_SCALE,
 } from "../../constants/animation";
-import './hero.css';
-
+import "./hero.css";
+import { MdNorthEast } from "react-icons/md";
+import Icon from "react-crypto-icons";
+import CiLogo from "../../assets/CiLogo.png"
 
 export default function HeroSection() {
   const [typingAnimationTextColor, setTypingAnimationTextColor] = useState("");
-  const [typingAnimationSize, setTypingAnimationSize] = useState("")    
+  const [typingAnimationSize, setTypingAnimationSize] = useState("");
+
+
+  const brands = ["btc","eth","usdt","bnb","sol","usdc","ada","avax","trx","doge","link","matic","etc","dai","uni","fil","stx","ldo","zil","1inch","aave","akt","atom","bal","busd","cake","comp","cosm","dodo","tfuel","grt","hbar","paxg","qtum","ray","sia","snx","storj","sushi","btc","eth","usdt","bnb","sol","usdc","ada","avax","trx","doge","link","matic","etc","dai","uni","fil","stx","ldo","zil","1inch","aave","akt","atom","bal","busd","cake","comp","cosm","dodo","tfuel","grt","hbar","paxg","qtum","ray","sia","snx","storj","sushi"];
+
   return (
-    <div
-      className="main-animation-div"
-    >
+    <div className="main-animation-div">
+      {/* LANDING HEADING */}
       <motion.div
         animate={{
           scale: HERO_HEADING_FINAL_SCALE,
@@ -30,29 +35,34 @@ export default function HeroSection() {
         transition={{ ease: "easeInOut", duration: HERO_HEADING_DURATION }}
         className="main-animation-box"
       >
-        <h2 className="main-static-text">{`Crypto Basket \u00A0`}</h2>
+        
+
+        <h2 className="main-static-text"><img src={CiLogo} style={{height: '150px', marginRight: '-36px', marginBottom: '-18px'}} alt="logo"/>{`rypto Basket \u00A0`}</h2>
         <h2
           className="main-animation-text"
-          style={{ color: typingAnimationTextColor, fontSize: typingAnimationSize }}
+          style={{
+            color: typingAnimationTextColor,
+            fontSize: typingAnimationSize,
+          }}
         >
           <TypeAnimation
             sequence={[
-              () => setTypingAnimationTextColor("#FF9B42"),
+              () => setTypingAnimationTextColor("#C4A287"),
               "To Simplify",
               1000,
-              ()=>setTypingAnimationTextColor("#C4A287 "),
+              () => setTypingAnimationTextColor("#B38CB4 "),
               "For Investors",
               1000,
-              () => setTypingAnimationTextColor("#EF476F"),
+              () => setTypingAnimationTextColor("#837A75"),
               "To Save",
               1000,
               () => setTypingAnimationTextColor("#758173"),
               "For Hodlers",
               1000,
-              () => setTypingAnimationTextColor("#3A5743 "),
+              () => setTypingAnimationTextColor("#ff9b42 "),
               "To Diversify",
               1000,
-              () => setTypingAnimationTextColor("#D8D8F6 "),
+              () => setTypingAnimationTextColor("#3A5743 "),
               "For Traders",
               1000,
             ]}
@@ -66,10 +76,86 @@ export default function HeroSection() {
             className="inline-block"
           />
         </h2>
-        <p className="main-animation-subtext"> Crypto Index Fund is your gateway to simplified, diversified cryptocurrency investments. We come to your rescue, offering you a smarter and more accessible way to invest in the exciting world of cryptocurrencies. </p>
+        <p className="main-animation-subtext">
+          {" "}
+          Crypto Index Fund is your gateway to simplified, diversified
+          cryptocurrency investments. We come to your rescue, offering you a
+          smarter and more accessible way to invest in the exciting world of
+          cryptocurrencies.{" "}
+        </p>
       </motion.div>
-      
-      
+
+      {/* // ACTION BUTTON */}
+      <div className="button-box">
+        <button
+          style={{
+            justifyContent: "space-between",
+            fontSize: "x-large",
+            marginInline: "2%",
+            boxShadow: "#cccbcb 0px 10px 70px -10px",
+          }}
+        >
+          Get Started{" "}
+          <MdNorthEast
+            size={30}
+            style={{
+              backgroundColor: "#000",
+              color: "#a5e65a",
+              padding: "4px",
+              borderRadius: "25px",
+              marginLeft: "0%",
+            }}
+          />
+        </button>
+        <button
+          style={{
+            width: " 220px",
+            justifyContent: "space-between",
+            fontSize: "x-large",
+            marginInline: "2%",
+            backgroundColor: "#303a4f",
+            color: "#a5e65a",
+            boxShadow: "#a5e65a 0px 0px 80px -14px",
+          }}
+        >
+          View Products{" "}
+          <MdNorthEast
+            size={32}
+            style={{
+              backgroundColor: "#000",
+              color: "#a5e65a",
+              padding: "4px",
+              borderRadius: "25px",
+              marginLeft: "0%",
+            }}
+          />
+        </button>
+      </div>
+
+      {/* //BRAND CAROUSEL */}
+
+      <div className="carousel-container">
+        <motion.div
+          className="carousel"
+          animate={{
+            x: ["0%", "50%"],
+          }}
+          transition={{
+            duration: 120, // Adjust the duration to control speed
+            ease: "linear",
+            repeat: Infinity,
+            repeatType: "loop",
+            repeatDelay: 0
+          }}
+        >
+          {/* Duplicate the brand list for seamless looping */}
+          {[...brands, ...brands].map((logo, index) => (
+            <motion.div key={index} className="carousel-item" whileHover={{scale: 1.4}}>
+              <Icon key={index} name={logo} size={50} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 }

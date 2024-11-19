@@ -1,11 +1,12 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  width: 98vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: var(--color-black);
+  /* background-color: var(--color-black); */
+  background: transparent;
   color: var(--color-white);
   position:relative;
 }
@@ -26,26 +27,26 @@ a {
 
 button {
   width: 200px;
-  border-radius: 16px;
+  border-radius: 50px;
+  border-width: 0px;
   margin-block: 10px;
   margin-block: 10px;
-  padding-block: 10px;
+  padding-block: 12px;
   padding-inline: 20px;
   background-color: var(--primary-color);
-  box-shadow: 2px 1px var(--color-white);
+  box-shadow: rgb(190, 191, 192) 0px 10px 50px -5px;
   display: flex;
   flex-direction: row;
   justify-content:center;
   align-items: center;
   font-size: large;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 button:hover {
   scale: 1.05;
-  box-shadow: 1px 1px var(--primary-color);
+  box-shadow: 1px 1px 2pxvar(--primary-color);
 }
-
 
 
 input {

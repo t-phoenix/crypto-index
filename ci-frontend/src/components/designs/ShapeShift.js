@@ -18,7 +18,7 @@ export default function ShapeShift() {
       // transition={{ duration: 2 }}
     >
       <motion.div
-        viewBox="0 0 600 600"
+        viewBox="0 0 1000 600"
         animate={{
           scale: [1, 0.5, 1.2, 1.5, 1],
           rotate: [0, 90, 270, 270, 180],
@@ -39,11 +39,12 @@ export default function ShapeShift() {
           ],
         }}
         transition={{
-          duration: 2,
+          duration: 5,
           ease: "easeInOut",
           times: [0, 0.2, 0.5, 0.8, 1],
           repeat: Infinity,
-          repeatDelay: 1,
+          repeatType: "loop",
+          repeatDelay: 0,
         }}
         style={{
           height: "180px",

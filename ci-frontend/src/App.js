@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Fund from "./pages/Fund";
 import DemoApp from "./pages/DemoApp";
 import Analytics from "./pages/Analytics";
+import background from "./assets/background.jpg"
 
 function App() {
   const { chain } = useNetwork();

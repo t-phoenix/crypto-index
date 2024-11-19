@@ -13,13 +13,13 @@ export default function Home(){
     return(
         <div >
             <HeroSection />
-            <motion.div 
+            {/* <motion.div 
                 initial={{opacity: 0, translateX: -200}}
                 whileInView={{opacity: 1, translateX: 0}}
                 transition={{duration: 1}}
                 >
                 <IconList />
-            </motion.div>
+            </motion.div> */}
             <SecondSection />
             <ThirdSection />
             <ForthSection />

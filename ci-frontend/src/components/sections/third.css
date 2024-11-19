@@ -1,11 +1,52 @@
 .third-section-box{
-    height: 80vh;
-    margin-bottom: 20vh;
+    height: 110vh;
     padding-inline: 6%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    /* border-width: 2px;
+    border-style: solid; */
     
+  }
+
+  .card{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-inline: 6%;
+    z-index: 5;
+    padding-top: 0%;
+}
+.third-info-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-block: 8%;
+  }
+
+  .third-info-grid-box{
+    height: 180px;
+    background-color: var(--color-offblack);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    padding-left: 6%;
+    padding-block: 8%;
+    border-radius: 12px;
+  }
+
+  .third-icon-style{
+    color: var(--primary-color);
+    margin-right: 8px;
+  }
+  .end-button-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
   }
   
   @media all and (max-width: 600px) {

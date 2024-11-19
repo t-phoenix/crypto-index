@@ -3,7 +3,7 @@ import Icon from 'react-crypto-icons';
 import './iconlist.css';
 
 export default function IconList(){
-    const iconList = ["btc", "eth", "usdt", "bnb", "sol", "usdc", "ada", "avax", "trx", "doge", "link", "matic", "etc", "dai", "bch", "ltc", "uni", "leo", "fil", "stx", "vet", "okb", "ldo", "zil"   ]
+    const iconList = ["btc", "eth", "usdt", "bnb", "sol", "usdc", "ada", "avax", "trx", "doge", "link", "matic", "etc", "dai", "bch", "ltc", "uni", "leo", "fil", "stx", "vet", "okb", "ldo", "zil", "ape"   ]
 
     return(
         <div className="icon-box">
