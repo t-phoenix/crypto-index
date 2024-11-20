@@ -104,8 +104,8 @@
 
   @media all and (max-width: 600px) {
     .forth-section-box{
-      height: 126vh;
-      margin-block: 0vh;
+      height: 160vh;
+      margin-block: 5vh;
       padding-inline: 6%;
       display: flex;
       flex-direction: row;
@@ -125,7 +125,7 @@
         margin-block: 10px;
     }
     .forth-card{
-      height: 70vh;
+      height: 100vh;
     }
     .card-content{
       width: 90%;

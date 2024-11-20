@@ -72,6 +72,8 @@
 
 @media all and (max-width: 600px) {
     .second-section-box{
+      height: 140vh;
+      margin-block: 10vh;
         flex-direction: column;
     }
     .card-header{
@@ -80,6 +82,9 @@
     .card-content{
         font-size: 1em;
         padding-left: 1%;
+    }
+    .endbox-title{
+      font-size: 14px;
     }
 }
 

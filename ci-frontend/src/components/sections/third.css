@@ -69,7 +69,7 @@
   
   @media all and (max-width: 600px) {
       .third-section-box{
-          height: 136vh;
+          height: 160vh;
           margin-block: 4vh;
           flex-direction: column-reverse;
       }
