@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin-block: 8%;
+  margin-block: 4%;
 }
 .forth-info-grid-box{
   display: flex;
@@ -33,6 +33,20 @@
   border-radius: 12px;
 
 }
+.forth-card{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-inline: 6%;
+  z-index: 5;
+  padding-top: 4%;
+}
+
+.card-header{
+  margin-top: 5%;
+}
 
 
 
@@ -40,8 +54,8 @@
 
 .anim-container{
     width: 80%;
-    height: 100%;
-    margin-block: 10%;
+    height: 80%;
+    margin-block: 0%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -76,7 +90,7 @@
   }
 
   @media all and (max-width: 1300px) and (min-width: 600px) {
-    .card{
+    .forth-card{
       margin-inline: 0px;
     }
     .forth-info-grid-box h2{
@@ -90,8 +104,8 @@
 
   @media all and (max-width: 600px) {
     .forth-section-box{
-      height: 140vh;
-      margin-bottom: 0vh;
+      height: 126vh;
+      margin-block: 0vh;
       padding-inline: 6%;
       display: flex;
       flex-direction: row;
@@ -102,10 +116,16 @@
     .forth-section-box{
         flex-direction: column;
     }
+    .anim-container{
+      height: 50vh;
+    }
     .anim-circle{
         width: 100px;
         height: 100px;
         margin-block: 10px;
+    }
+    .forth-card{
+      height: 70vh;
     }
     .card-content{
       width: 90%;

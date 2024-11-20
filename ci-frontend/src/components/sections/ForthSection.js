@@ -8,7 +8,7 @@ export default function ForthSection() {
 
   return (
     <div className="forth-section-box">
-      <motion.div className="card" 
+      <motion.div className="forth-card" 
         initial={{opacity: 0, translateX: -200}}
         whileInView={{opacity: 1, translateX: 0}}
         transition={{duration: 2}}
