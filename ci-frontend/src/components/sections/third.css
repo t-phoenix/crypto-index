@@ -41,6 +41,7 @@
   .third-icon-style{
     color: var(--primary-color);
     margin-right: 8px;
+    height: 40px;
   }
   .end-button-box{
     display: flex;

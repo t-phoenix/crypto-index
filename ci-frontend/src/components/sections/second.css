@@ -1,6 +1,6 @@
 .second-section-box{
   height: 100vh;
-  margin-bottom: 0vh;
+  margin-top: 20vh;
   padding-inline: 6%;
   display: flex;
   flex-direction: row;
@@ -73,8 +73,8 @@
 @media all and (max-width: 600px) {
     .second-section-box{
       height: 140vh;
-      margin-block: 10vh;
-        flex-direction: column;
+      margin-block: 20vh 10vh;
+      flex-direction: column;
     }
     .card-header{
         font-size: 2.6em;
