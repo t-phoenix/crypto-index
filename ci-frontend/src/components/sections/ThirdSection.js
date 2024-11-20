@@ -14,7 +14,7 @@ import BoxDesign from "../designs/BoxDesign";
 export default function ThirdSection() {
   return (
     <div className="third-section-box">
-      <BoxDesign />
+        <BoxDesign />
       <motion.div
         className="card"
         initial={{ opacity: 0, translateX: -200 }}
@@ -61,15 +61,7 @@ export default function ThirdSection() {
         </div>
 
         <div className="end-button-box">
-          <button
-            style={{
-              width: "220px",
-              justifyContent: "space-between",
-              fontSize: "x-large",
-              marginInline: "2%",
-              boxShadow: "#cccbcb 0px 10px 70px -10px",
-            }}
-          >
+          <button className="main-button">
             Products{" "}
             <MdNorthEast
               size={30}
@@ -82,17 +74,7 @@ export default function ThirdSection() {
               }}
             />
           </button>
-          <button
-            style={{
-              justifyContent: "space-between",
-              fontSize: "x-large",
-              marginInline: "2%",
-              paddingBlock: "2%",
-              backgroundColor: "#303a4f",
-              color: "#a5e65a",
-              boxShadow: "#a5e65a 0px 0px 80px -14px",
-            }}
-          >
+          <button className="support-button">
             Contact Us{" "}
             <MdNorthEast
               size={32}

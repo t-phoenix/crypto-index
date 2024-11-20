@@ -1,6 +1,6 @@
 .forth-section-box{
     height: 100vh;
-    margin-bottom: 20vh;
+    margin-block: 10vh;
     padding-inline: 6%;
     display: flex;
     flex-direction: row;
@@ -37,6 +37,7 @@
 
 
 
+
 .anim-container{
     width: 80%;
     height: 100%;
@@ -44,6 +45,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    overflow-x: hidden;
   }
 
 .anim-circle {
@@ -73,8 +75,30 @@
     fill: var(--secondary-color);
   }
 
+  @media all and (max-width: 1300px) and (min-width: 600px) {
+    .card{
+      margin-inline: 0px;
+    }
+    .forth-info-grid-box h2{
+      font-size: 12px;
+      text-align: start;
+    }
+    .end-box p{
+      text-align: start;
+    }
+  }
 
   @media all and (max-width: 600px) {
+    .forth-section-box{
+      height: 140vh;
+      margin-bottom: 0vh;
+      padding-inline: 6%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      /* border-width: 2px;
+      border-style: solid; */
+    }
     .forth-section-box{
         flex-direction: column;
     }
@@ -82,5 +106,18 @@
         width: 100px;
         height: 100px;
         margin-block: 10px;
+    }
+    .card-content{
+      width: 90%;
+    }
+    .forth-info-grid{
+      gap: 6px;
+    }
+    .forth-info-grid-box h2{
+      font-size: 12px;
+      text-align: start;
+    }
+    .end-box p{
+      text-align: start;
     }
 }

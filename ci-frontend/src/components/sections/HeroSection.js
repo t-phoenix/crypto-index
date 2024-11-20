@@ -88,14 +88,9 @@ export default function HeroSection() {
       {/* // ACTION BUTTON */}
       <div className="button-box">
         <button
-          style={{
-            justifyContent: "space-between",
-            fontSize: "x-large",
-            marginInline: "2%",
-            boxShadow: "#cccbcb 0px 10px 70px -10px",
-          }}
+          className="main-button-hero"
         >
-          Get Started{" "}
+          <p>Get Started{" "}</p>
           <MdNorthEast
             size={30}
             style={{
@@ -108,17 +103,9 @@ export default function HeroSection() {
           />
         </button>
         <button
-          style={{
-            width: " 220px",
-            justifyContent: "space-between",
-            fontSize: "x-large",
-            marginInline: "2%",
-            backgroundColor: "#303a4f",
-            color: "#a5e65a",
-            boxShadow: "#a5e65a 0px 0px 80px -14px",
-          }}
+          className="support-button-hero"
         >
-          View Products{" "}
+          <p>View Products{" "}</p>
           <MdNorthEast
             size={32}
             style={{

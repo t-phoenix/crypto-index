@@ -50,6 +50,25 @@
   width: 100%;
   margin-block: 4%;
 }
+.main-button-hero{
+  justify-content: space-between;
+  font-size: x-large;
+  margin-inline: 2%;
+  padding-block: 0.8%;
+
+  box-shadow: #cccbcb 0px 10px 70px -10px;
+}
+
+.support-button-hero{
+  width: 220px;
+  justify-content: space-between;
+  font-size: x-large;
+  margin-inline: 2%;
+  padding-block: 1%;
+  background-color: #303a4f;
+  color: #a5e65a;
+  box-shadow: #a5e65a 0px 0px 80px -14px;
+}
 
 
 
@@ -95,43 +114,51 @@
     flex-direction: column;
   }
   .main-static-text {
-    margin-right: 20%;
+    margin-right: 0;
+    width: 92%
   }
   .main-animation-text {
     height: auto;
     min-width: 30vw;
-    font-size: 9.2vh;
-    margin-left: 20%;
+    font-size: 7.2vh;
+    margin-left: 0;
     border-radius: 0%;
-    padding-inline: 2px;
-    padding-block: 2px;
+    padding-inline: 0px;
+    padding-block: 0px;
   }
   .main-animation-subtext {
     font-size: 14px;
     width: 50%;
-    margin-left: 20%;
+    margin-left: 0%;
     margin-top: 8%;
-    text-align: right;
+    text-align: center;
     line-height: 26px;
+  }
+  .carousel-container{
+    /* width: 80%;
+    margin-inline: 0%; */
+
   }
 }
 
 /* For mobile Devices */
 @media all and (max-width: 600px) {
   .main-animation-box {
-    margin-block: 10vh;
+    margin-top: 10vh;
+    margin-bottom: 4vh;
     padding-block: 0vh;
     font-size: 5.4vh;
     flex-direction: column;
   }
   .main-static-text {
-    margin-right: 20%;
+    margin-right: 0%;
+    width: 96%;
   }
   .main-animation-text {
     height: auto;
     min-width: 30vw;
     font-size: 5.8vh;
-    margin-left: 10%;
+    margin-left: 0%;
     margin-top: 4%;
     border-radius: 5%;
     padding-inline: 2px;
@@ -140,10 +167,32 @@
   .main-animation-subtext {
     font-size: 14px;
     width: 90%;
-    margin-left: 8%;
+    margin-left: 0%;
     margin-top: 18%;
-    text-align: right;
+    text-align: center;
     line-height: 26px;
+  }
+  .carousel-container{
+    width: 100%;
+    margin-inline: 0%;
+  }
+  .button-box{
+  margin-top: 2%;
+  margin-bottom: 4%;
+
+  }
+  .main-button-hero{
+    padding-block: 12px;
+  }
+  .main-button-hero p{
+    font-size: 14px;
+  }
+  .support-button-hero{
+    padding-block: 14px;
+
+  }
+  .support-button-hero p{
+    font-size: 14px;
   }
 }
 

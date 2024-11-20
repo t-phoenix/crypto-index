@@ -7,6 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
 import CiLogo from "../assets/CiLogo.png"
+import { MdMenu } from "react-icons/md";
 
 
 export default function Header() {
@@ -30,7 +31,7 @@ export default function Header() {
         // FOR MOBILE AND TAB
         <div className="header-container">
           <div className="nav-burger" onClick={openNavBar}>
-            {account.address && <IoMenu />}
+            {<MdMenu size={40}/>}
           </div>
           <div className="title-container" onClick={() => {navigate("/"); setShowMenu(false);}}>
           {/* <img src={CiLogo} style={{width: '30px'}} alt="Crypto Index Logo"/> */}

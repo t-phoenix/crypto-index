@@ -9,7 +9,7 @@ export default function SubNav({options, selectedOption, setSelectedOption}){
         <div className="subnav-container">
             {options.map((option, index) => (
               <>
-              {option.id == selectedOption.id ? 
+              {option.id === selectedOption.id ? 
               <div className="subnav-element selected-subnav-element">
                 <p>{option.title}</p>
               </div>:

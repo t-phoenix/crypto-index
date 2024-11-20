@@ -48,11 +48,48 @@
     justify-content: start;
     align-items: center;
   }
+
+  .main-button{
+    width: 180px;
+    justify-content: space-between;
+    font-size: x-large;
+    margin-inline: 2%;
+    box-shadow: #cccbcb 0px 10px 70px -10px;
+  }
+  .support-button{
+    width: 220px;
+    justify-content: space-between;
+    font-size: x-large;
+    margin-inline: 2%;
+    padding-block: 2%;
+    box-shadow: #a5e65a 0px 10px 70px -10px;
+    background-color: #303a4f;
+    color: #a5e65a;
+  }
   
   @media all and (max-width: 600px) {
       .third-section-box{
+          height: 136vh;
+          margin-block: 4vh;
           flex-direction: column-reverse;
       }
+      .third-info-grid-box h1{
+        font-size: 18px;
+      }
+      .main-button{
+        font-size: 16px;
+        width: 150px;
+        padding: 6px 10px 6px 12px
+      }
+      .support-button{
+        width: 160px;
+        font-size: 16px;
+        padding-block: 4%;
+        padding: 8px 10px 8px 12px
+
+      }
+      
+
       
   }
   
